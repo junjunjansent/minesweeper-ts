@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
+body {
+  background-color: lightcyan;
+  background-image: url("../assets/minefield.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  /* background-color: lightcyan; */
+  font-size: 1.5rem;
+  margin: 0;
+  text-align: center;
+}
+
+body * {
+  font-family: "VT323", system-ui;
+}
+
+h1 {
+  font-family: "Press Start 2P", system-ui, sans-serif;
+  margin: 3rem 0rem;
+  height: 1rem;
+}
+
+#command {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+#reset {
+  font-size: 1.2rem;
+  height: fit-content;
+}
+
+#game {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+/* .btn-difficulty {
+  width: 5rem;
+  height: 5rem;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+} */
+
+.btn-difficulty {
+  width: 6rem;
+  aspect-ratio: 1/1;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  border: none;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-difficulty > p {
+  display: none;
+  position: absolute;
+  bottom: -2.5rem;
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 1rem;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.btn-difficulty:hover p {
+  display: block;
+}
+
+.btn-difficulty:hover {
+  background-color: lightgray;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+}

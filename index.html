@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script type="module" src="./game/minesweeper/mSwprController.ts"></script>
+    <title>Minesweeper</title>
+  </head>
+  <body>
+    <!-- <img src="./assets/minefield.png" alt="Minefield" width="300" /> -->
+    <h1>MINESWEEPER</h1>
+    <section id="command">
+      <h2 id="message">Message</h2>
+      <button id="reset">Reset</button>
+    </section>
+    <section id="game">
+      <button class="btn-difficulty" data-label="Easy">
+        😊<br />
+        <p>9x9 grid (10 bombs)</p>
+        Easy
+      </button>
+      <button class="btn-difficulty" data-label="Medium">
+        😎<br />
+        <p>15x15 grid (40 bombs)</p>
+        Medium
+      </button>
+      <button class="btn-difficulty" data-label="Hard">
+        🧠<br />
+        <p>30x30 grid (180 bombs)</p>
+        Hard
+      </button>
+    </section>
+    <div id="minefieldContainer"></div>
+  </body>
+</html>
