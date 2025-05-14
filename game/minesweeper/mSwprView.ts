@@ -1,23 +1,28 @@
 // Notes:
 // need to find a way to tie the difficulty details into the front page
 
+import { MineCell } from "./mSwprUtils";
+
 export class MinesweeperView {
   private messageElmt: HTMLElement;
   private resetElmt: HTMLElement;
   private btnSection: HTMLElement;
+  private minefieldElmt: HTMLElement;
 
   constructor() {
     const messageElement = document.getElementById("message");
     const resetElement = document.getElementById("reset");
     const btnSection = document.getElementById("btn-section");
+    const minefieldElmt = document.getElementById("minefield");
 
-    if (!messageElement || !resetElement || !btnSection) {
+    if (!messageElement || !resetElement || !btnSection || !minefieldElmt) {
       throw new Error("Something is missing in DOM.");
     }
 
     this.messageElmt = messageElement;
     this.resetElmt = resetElement;
     this.btnSection = btnSection;
+    this.minefieldElmt = minefieldElmt;
   }
 
   // ----------- Binders
@@ -26,25 +31,75 @@ export class MinesweeperView {
   }
 
   bindDifficultyBtns(controllerHandler: (event: MouseEvent) => void): void {
-    this.btnSection.addEventListener("click", (event) => {
-      if (
-        event.target instanceof HTMLElement &&
-        event.target.classList.contains("btn-difficulty")
-      ) {
-        controllerHandler(event);
-      }
-    });
+    this.btnSection.addEventListener("click", controllerHandler);
   }
 
-  // ----------- Board Builder
-  updateBoard = () => {};
+  bindMinefieldElmt(controllerHandler: (event: MouseEvent) => void): void {
+    this.minefieldElmt.addEventListener("click", controllerHandler);
+  }
+
+  // ----------- Minefield Builder
+  createMinefield = (board: MineCell[][]): void => {
+    const rows = board.length;
+    const cols = board[0].length;
+
+    for (let i = 0; i < rows; i++) {
+      const tr = document.createElement("tr");
+      this.minefieldElmt.append(tr);
+      for (let j = 0; j < cols; j++) {
+        const td = document.createElement("td");
+        td.dataset.row = i.toString();
+        td.dataset.col = j.toString();
+        td.dataset.state = "not-revealed";
+        tr.append(td);
+      }
+    }
+  };
+
+  updateMinefield = (board: MineCell[][]): void => {
+    const rows = board.length;
+    const cols = board[0].length;
+
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        const td = document.querySelector(
+          `td[data-row="${i}"][data-col="${j}"]`
+        );
+        if (!(td instanceof HTMLElement)) {
+          continue;
+        }
+
+        if (board[i][j].isRevealed) {
+          td.dataset.state = "revealed";
+
+          // further updating to revealed cells
+          if (board[i][j].hasBomb) {
+            td.innerHTML = '<i class="fa-solid fa-bomb"></i>';
+          } else if (board[i][j].adjacentBombs > 0) {
+            td.textContent = board[i][j].adjacentBombs.toString();
+          } else if (board[i][j].adjacentBombs === 0) {
+            td.textContent = ":)";
+          }
+        }
+      }
+    }
+  };
 
   // ----------- Visibility
-  hideVisibilityBtnSection = () => {
+  hideVisibilityBtnSection = (): void => {
     this.btnSection.style.display = "none";
   };
 
-  showVisibilityBtnSection = () => {
+  showVisibilityBtnSection = (): void => {
     this.btnSection.style.display = "flex";
+  };
+
+  hideVisibilityMinefieldElmt = (): void => {
+    this.minefieldElmt.style.display = "none";
+  };
+
+  showVisibilityMinefieldElmt = (): void => {
+    // do not use display: flex or display:block for table
+    this.minefieldElmt.style.display = "table";
   };
 }

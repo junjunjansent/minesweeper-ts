@@ -65,3 +65,44 @@ export const createMinesweeperBoard = ({ rows, cols, bombs }): MineCell[][] => {
 
   return board;
 };
+
+export const exploreMinesweeperBoard = (
+  row: number,
+  col: number,
+  board: MineCell[][]
+): MineCell[][] => {
+  const rows = board.length;
+  const cols = board[0].length;
+
+  let i = row;
+  let j = col;
+  let revealedEmptyCells = 1;
+
+  // NEED TO WORK ON THIS THIS CAUSES PROBLEMS
+  while (revealedEmptyCells > 0) {
+    board[i][j].isRevealed = true;
+    // usual open
+    for (const [i_adj, j_adj] of adjacentCells) {
+      const [i_neighbour, j_neighbour] = [row + i_adj, col + j_adj];
+      if (
+        i_neighbour >= 0 &&
+        i_neighbour < rows &&
+        j_neighbour >= 0 &&
+        j_neighbour < cols
+      ) {
+        board[i_neighbour][j_neighbour].isRevealed = true;
+        if (
+          board[i_neighbour][j_neighbour].isRevealed &&
+          board[i_neighbour][j_neighbour].adjacentBombs === 0
+        ) {
+          i = i_neighbour;
+          j = j_neighbour;
+          revealedEmptyCells++;
+        }
+      }
+      revealedEmptyCells--;
+    }
+  }
+
+  return board;
+};

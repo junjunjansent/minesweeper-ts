@@ -25,7 +25,7 @@ body::after {
   background-repeat: no-repeat;
   opacity: 0.4;
   pointer-events: none;
-  z-index: 10;
+  z-index: -1;
 }
 
 body * {
@@ -94,4 +94,38 @@ h1 {
 .btn-difficulty:hover {
   background-color: gray;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+#minefield-container {
+  display: flex;
+  justify-content: center;
+}
+
+#minefield {
+  max-width: 80vw;
+}
+
+#minefield td {
+  border: 1px;
+  padding: 0.1em;
+  min-width: 2rem;
+  height: 2rem;
+  aspect-ratio: 1/1;
+  background-color: lightblue;
+  color: black;
+  transition: all 0.3s ease;
+  /* cant use display:flex in table */
+  text-align: center;
+  vertical-align: center;
+}
+
+#minefield td[data-state="revealed"] {
+  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
+  background-color: lightskyblue;
+}
+
+#minefield td[data-state="not-revealed"]:hover {
+  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
+  background-color: gray;
+  cursor: pointer;
 }

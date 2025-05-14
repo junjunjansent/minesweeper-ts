@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/style.css" />
     <script type="module" src="./game/minesweeper/mSwprController.ts"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
     <title>Minesweeper</title>
   </head>
   <body>
     <!-- <img src="./assets/minefield.png" alt="Minefield" width="300" /> -->
     <h1>MINESWEEPER</h1>
+    <i class="fa-solid fa-bomb"></i>
     <section id="command">
       <h2 id="message">Click to Begin :)</h2>
       <button id="reset">Reset</button>
@@ -31,6 +36,24 @@
         Hard
       </button>
     </section>
-    <div id="minefieldContainer"></div>
+    <div id="minefield-container">
+      <table id="minefield">
+        <!-- <tr>
+          <td>help1</td>
+          <td>help1</td>
+          <td>help1</td>
+        </tr>
+        <tr>
+          <td>help2</td>
+          <td>help2</td>
+          <td>help2</td>
+        </tr>
+        <tr>
+          <td>help3</td>
+          <td>help3</td>
+          <td>help3</td>
+        </tr> -->
+      </table>
+    </div>
   </body>
 </html>
