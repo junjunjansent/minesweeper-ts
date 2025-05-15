@@ -2,6 +2,7 @@ import {
   MineCell,
   createMinesweeperBoard,
   exploreMinesweeperBoard,
+  countNotRevealedMineCells,
 } from "./mSwprUtils";
 import { difficulty } from "./mSwprConfig";
 
@@ -9,23 +10,38 @@ export class MinesweeperModel {
   //   private mineCell: MineCell;
   private difficulty; // NEED TO BETTER DEFINE
   private board: MineCell[][];
+  private currentDifficultyLevel: string;
   private gameState: "pendingStart" | "ongoing" | "finished";
 
+  // ---------- Loaders
+
+  // NEED TO BETTER DEFINE
+  loadDifficulty = (): void => {
+    this.difficulty = difficulty;
+  };
+
+  // NEED to look at if can replace difficultyLevel with currentDifficulty Level
   loadBoard = (difficultyLevel: string): void => {
-    if (!difficulty[difficultyLevel]) {
+    if (!difficulty[this.currentDifficultyLevel]) {
       console.log("Unknown Difficulty Selected");
       return;
     }
-    this.difficulty = difficulty;
-    this.board = [[]];
-    this.board = createMinesweeperBoard(this.difficulty[difficultyLevel]);
+
+    const difficultyValues = this.difficulty[this.currentDifficultyLevel];
+    this.board = createMinesweeperBoard(difficultyValues);
     this.gameState = "ongoing";
 
     console.log("Model");
     console.dir(this.board);
   };
 
-  setBoard = (row: number, col: number) => {
+  // ---------- Setters
+
+  setCurrentDifficultyLevel = (difficultyLevel: string): void => {
+    this.currentDifficultyLevel = difficultyLevel;
+  };
+
+  setBoard = (row: number, col: number): void => {
     exploreMinesweeperBoard(row, col, this.board);
   };
 
@@ -33,13 +49,26 @@ export class MinesweeperModel {
     this.gameState = status;
   };
 
+  // ---------- Game Logic
+
   checkBombStatus = (row: number, col: number): Boolean => {
     return this.board[row][col].hasBomb;
   };
 
-  // NEED TO BETTER DEFINE
+  checkWinCondition = (): Boolean => {
+    const { bombs } = this.difficulty[this.currentDifficultyLevel];
+    console.log("model: " + countNotRevealedMineCells(this.board));
+    return bombs === countNotRevealedMineCells(this.board);
+  };
+
+  // ---------- Getters
+
   getDifficulty = (): unknown => {
     return this.difficulty;
+  };
+
+  getCurrentDifficultyLevel = (): string => {
+    return this.currentDifficultyLevel;
   };
 
   getBoard = (): MineCell[][] => {

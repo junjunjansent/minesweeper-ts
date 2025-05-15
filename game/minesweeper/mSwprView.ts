@@ -39,6 +39,10 @@ export class MinesweeperView {
     this.resetElmt.addEventListener("click", controllerHandler);
   }
 
+  //   bindNewBoardBtn(controllerHandler: () => void): void {
+  //     this.resetElmt.addEventListener("click", controllerHandler);
+  //   }
+
   bindDifficultyBtns(controllerHandler: (event: MouseEvent) => void): void {
     this.btnSection.addEventListener("click", controllerHandler);
   }
@@ -114,7 +118,7 @@ export class MinesweeperView {
 
         // update to all bombs only
         if (board[i][j].hasBomb) {
-          td.dataset.state = "revealed";
+          td.dataset.state = "end-revealed";
           td.innerHTML = '<i class="fa-solid fa-bomb"></i>';
         }
       }
@@ -122,6 +126,17 @@ export class MinesweeperView {
   };
 
   // ----------- Minefield: Style
+
+  redMineCellElmt = (row: number, col: number): void => {
+    const td = document.querySelector(
+      `td[data-row="${row}"][data-col="${col}"]`
+    );
+    if (!(td instanceof HTMLElement)) {
+      return;
+    }
+
+    td.dataset.state = "end-error";
+  };
 
   greyMinefieldElmt = (): void => {
     this.minefieldElmt.style.opacity = "0.7";

@@ -17,6 +17,7 @@ class MinesweeperController {
   }
 
   private init = () => {
+    this.model.loadDifficulty();
     this.view.updateMessageElmt("Click to Begin :)");
   };
 
@@ -44,6 +45,7 @@ class MinesweeperController {
     }
 
     const difficultyLevel = event.target.dataset.label;
+    this.model.setCurrentDifficultyLevel(difficultyLevel ?? "");
 
     // create board
     console.dir("Controller " + difficultyLevel);
@@ -74,19 +76,32 @@ class MinesweeperController {
     const row = parseInt(event.target.dataset.row ?? "-1");
     const col = parseInt(event.target.dataset.col ?? "-1");
 
-    console.log("has Bomb here?... " + this.model.checkBombStatus(row, col));
+    console.log(
+      "controller: has Bomb here?... " + this.model.checkBombStatus(row, col)
+    );
     this.model.setBoard(row, col); // model: via utils: open all adjacent rows
     this.view.updateMinefield(this.model.getBoard());
 
     if (this.model.checkBombStatus(row, col)) {
       // bomb discovered, so LOSE condition
 
+      // update Elmts: minefield - open and gray out minefield & highlight error
+      this.view.openMinefield(this.model.getBoard());
+      this.view.greyMinefieldElmt();
+      this.view.redMineCellElmt(row, col);
+
+      // update Elmts: message
+      const msg = `You Lost! 😔 Wanna play again?`;
+      this.view.updateMessageElmt(msg);
+    } else if (this.model.checkWinCondition()) {
+      // bomb discovered, so WIN condition
+
       // update Elmts: minefield - open and gray out minefield
       this.view.openMinefield(this.model.getBoard());
       this.view.greyMinefieldElmt();
 
       // update Elmts: message
-      const msg = `You Lost! 😔 Wanna play again?`;
+      const msg = `🤩!!You WON!!🤩 Wanna play again?`;
       this.view.updateMessageElmt(msg);
     }
     // if win or lose

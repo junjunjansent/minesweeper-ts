@@ -116,8 +116,23 @@ export const exploreMinesweeperBoard = (
     queuedRevealedEmptyCells.shift();
   }
 
-  console.log("utils");
-  console.dir(visitedEmptyCells);
+  // console.log("utils");
+  // console.dir(visitedEmptyCells);
 
   return board;
+};
+
+export const countNotRevealedMineCells = (board: MineCell[][]): number => {
+  let result: number = 0;
+  const rows = board.length;
+  const cols = board[0].length;
+
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      if (!board[i][j].isRevealed) {
+        result++;
+      }
+    }
+  }
+  return result;
 };
