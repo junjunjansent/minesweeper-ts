@@ -4,18 +4,21 @@ import {
   exploreMinesweeperBoard,
 } from "./mSwprUtils";
 import { difficulty } from "./mSwprConfig";
+
 export class MinesweeperModel {
-  //   private difficulty: difficulty;
   //   private mineCell: MineCell;
+  private difficulty; // NEED TO BETTER DEFINE
   private board: MineCell[][];
   private gameState: "pendingStart" | "ongoing" | "finished";
 
-  initBoard = (difficultyLevel: string): void => {
+  loadBoard = (difficultyLevel: string): void => {
     if (!difficulty[difficultyLevel]) {
       console.log("Unknown Difficulty Selected");
       return;
     }
-    this.board = createMinesweeperBoard(difficulty[difficultyLevel]);
+    this.difficulty = difficulty;
+    this.board = [[]];
+    this.board = createMinesweeperBoard(this.difficulty[difficultyLevel]);
     this.gameState = "ongoing";
 
     console.log("Model");
@@ -32,6 +35,11 @@ export class MinesweeperModel {
 
   checkBombStatus = (row: number, col: number): Boolean => {
     return this.board[row][col].hasBomb;
+  };
+
+  // NEED TO BETTER DEFINE
+  getDifficulty = (): unknown => {
+    return this.difficulty;
   };
 
   getBoard = (): MineCell[][] => {

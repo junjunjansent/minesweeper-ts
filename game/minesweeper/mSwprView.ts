@@ -47,7 +47,7 @@ export class MinesweeperView {
     this.minefieldElmt.addEventListener("click", controllerHandler);
   }
 
-  // ----------- Minefield Builder
+  // ----------- Minefield Elements Builder
   createMinefield = (board: MineCell[][]): void => {
     const rows = board.length;
     const cols = board[0].length;
@@ -94,24 +94,37 @@ export class MinesweeperView {
     }
   };
 
-  // ----------- update Message
-
-  // ----------- Visibility
-
-  hideVisibilityNewBoardElmt = (): void => {
-    this.newBoardElmt.style.display = "none";
+  clearMinefield = (): void => {
+    this.minefieldElmt.innerHTML = "";
   };
 
-  showVisibilityNewBoardElmt = (): void => {
-    this.newBoardElmt.style.display = "flex";
+  openMinefield = (board: MineCell[][]): void => {
+    // direct DOM manipulation, no game state change
+    const rows = board.length;
+    const cols = board[0].length;
+
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        const td = document.querySelector(
+          `td[data-row="${i}"][data-col="${j}"]`
+        );
+        if (!(td instanceof HTMLElement)) {
+          continue;
+        }
+
+        // update to all bombs only
+        if (board[i][j].hasBomb) {
+          td.dataset.state = "revealed";
+          td.innerHTML = '<i class="fa-solid fa-bomb"></i>';
+        }
+      }
+    }
   };
 
-  hideVisibilityBtnSection = (): void => {
-    this.btnSection.style.display = "none";
-  };
+  // ----------- Minefield: Style
 
-  showVisibilityBtnSection = (): void => {
-    this.btnSection.style.display = "flex";
+  greyMinefieldElmt = (): void => {
+    this.minefieldElmt.style.opacity = "0.7";
   };
 
   hideVisibilityMinefieldElmt = (): void => {
@@ -121,5 +134,30 @@ export class MinesweeperView {
   showVisibilityMinefieldElmt = (): void => {
     // do not use display: flex or display:block for table
     this.minefieldElmt.style.display = "table";
+    this.minefieldElmt.style.opacity = "1";
+  };
+
+  // ----------- update Message
+
+  updateMessageElmt(msg: string): void {
+    this.messageElmt.textContent = msg;
+  }
+
+  // ----------- Visibility
+
+  hideVisibilityNewBoardBtnElmt = (): void => {
+    this.newBoardElmt.style.display = "none";
+  };
+
+  showVisibilityNewBoardBtnElmt = (): void => {
+    this.newBoardElmt.style.display = "flex";
+  };
+
+  hideVisibilityBtnSection = (): void => {
+    this.btnSection.style.display = "none";
+  };
+
+  showVisibilityBtnSection = (): void => {
+    this.btnSection.style.display = "flex";
   };
 }
