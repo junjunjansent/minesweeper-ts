@@ -55,6 +55,7 @@ h1 {
 
 #new {
   display: none;
+  max-width: 8rem;
 }
 
 #btn-section {

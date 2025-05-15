@@ -11,15 +11,44 @@ class MinesweeperController {
     this.init();
 
     // bindEventListeners
-    this.view.bindReset(this.handleReset);
+    this.view.bindResetBtn(this.handleReset);
+    this.view.bindNewBoardBtn(this.handleNewBoard);
     this.view.bindDifficultyBtns(this.handleDifficultyBtns);
     this.view.bindMinefieldElmt(this.handleMinefieldInputs);
   }
+
+  // ---------- initialisers
 
   private init = () => {
     this.model.loadDifficulty();
     this.view.updateMessageElmt("Click to Begin :)");
   };
+
+  private initMinefield = (level?: string) => {
+    const difficultyLevel = level ?? this.model.getCurrentDifficultyLevel();
+
+    this.model.setCurrentDifficultyLevel(difficultyLevel);
+
+    // create board
+    console.dir("Controller " + difficultyLevel);
+    this.model.loadBoard(difficultyLevel);
+
+    // update Elmts: clear and create minefield
+    this.view.clearMinefield();
+    this.view.hideVisibilityMinefieldElmt();
+    this.view.createMinefield(this.model.getBoard());
+    this.view.showVisibilityMinefieldElmt();
+
+    // update Elmts: buttons
+    this.view.showVisibilityNewBoardBtnElmt(`New '${difficultyLevel}' Board`);
+    this.view.hideVisibilityBtnSection();
+
+    // update Elmts: message
+    const bombQty = this.model.getDifficulty()[difficultyLevel].bombs;
+    this.view.updateMessageElmt(`${bombQty} bombs to be found... Good luck!`);
+  };
+
+  // ---------- Input Handlers
 
   private handleReset = (): void => {
     console.log("reset clicked");
@@ -34,6 +63,11 @@ class MinesweeperController {
     this.view.updateMessageElmt("Click to Begin :)");
   };
 
+  private handleNewBoard = (): void => {
+    console.log("new board clicked");
+    this.initMinefield();
+  };
+
   private handleDifficultyBtns = (event: MouseEvent): void => {
     if (
       !(
@@ -44,24 +78,8 @@ class MinesweeperController {
       return;
     }
 
-    const difficultyLevel = event.target.dataset.label;
-    this.model.setCurrentDifficultyLevel(difficultyLevel ?? "");
-
-    // create board
-    console.dir("Controller " + difficultyLevel);
-    this.model.loadBoard(difficultyLevel ?? "");
-
-    // update Elmts: minefield
-    this.view.createMinefield(this.model.getBoard());
-    this.view.showVisibilityMinefieldElmt();
-
-    // update Elmts: buttons
-    this.view.showVisibilityNewBoardBtnElmt();
-    this.view.hideVisibilityBtnSection();
-
-    // update Elmts: message
-    const bombQty = this.model.getDifficulty()[difficultyLevel].bombs;
-    this.view.updateMessageElmt(`${bombQty} bombs to be found... Good luck!`);
+    const difficultyLevel = event.target.dataset.label ?? "";
+    this.initMinefield(difficultyLevel);
   };
 
   private handleMinefieldInputs = (event: MouseEvent): void => {

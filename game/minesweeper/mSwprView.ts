@@ -35,12 +35,12 @@ export class MinesweeperView {
   }
 
   // ----------- Binders
-  bindReset(controllerHandler: () => void): void {
+  bindResetBtn(controllerHandler: () => void): void {
     this.resetElmt.addEventListener("click", controllerHandler);
   }
 
   bindNewBoardBtn(controllerHandler: () => void): void {
-    this.resetElmt.addEventListener("click", controllerHandler);
+    this.newBoardElmt.addEventListener("click", controllerHandler);
   }
 
   bindDifficultyBtns(controllerHandler: (event: MouseEvent) => void): void {
@@ -161,10 +161,12 @@ export class MinesweeperView {
   // ----------- Visibility
 
   hideVisibilityNewBoardBtnElmt = (): void => {
+    this.newBoardElmt.innerText = "";
     this.newBoardElmt.style.display = "none";
   };
 
-  showVisibilityNewBoardBtnElmt = (): void => {
+  showVisibilityNewBoardBtnElmt = (text: string): void => {
+    this.newBoardElmt.innerText = text;
     this.newBoardElmt.style.display = "flex";
   };
 
