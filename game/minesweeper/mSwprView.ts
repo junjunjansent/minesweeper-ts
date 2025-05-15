@@ -39,9 +39,9 @@ export class MinesweeperView {
     this.resetElmt.addEventListener("click", controllerHandler);
   }
 
-  //   bindNewBoardBtn(controllerHandler: () => void): void {
-  //     this.resetElmt.addEventListener("click", controllerHandler);
-  //   }
+  bindNewBoardBtn(controllerHandler: () => void): void {
+    this.resetElmt.addEventListener("click", controllerHandler);
+  }
 
   bindDifficultyBtns(controllerHandler: (event: MouseEvent) => void): void {
     this.btnSection.addEventListener("click", controllerHandler);
