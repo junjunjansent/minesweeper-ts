@@ -78,7 +78,7 @@ export class MinesweeperView {
           } else if (board[i][j].adjacentBombs > 0) {
             td.textContent = board[i][j].adjacentBombs.toString();
           } else if (board[i][j].adjacentBombs === 0) {
-            td.textContent = ":)";
+            td.textContent = "";
           }
         }
       }

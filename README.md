@@ -1,1 +1,1 @@
-Simple minesweeper gameß
+# Simple Minesweeper 💣 Game

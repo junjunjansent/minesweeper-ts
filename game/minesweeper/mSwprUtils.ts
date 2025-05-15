@@ -74,35 +74,51 @@ export const exploreMinesweeperBoard = (
   const rows = board.length;
   const cols = board[0].length;
 
-  let i = row;
-  let j = col;
-  let revealedEmptyCells = 1;
+  let visitedEmptyCells: [number, number][] = [];
+  let queuedRevealedEmptyCells: [number, number][] = [[row, col]];
 
-  // NEED TO WORK ON THIS THIS CAUSES PROBLEMS
-  while (revealedEmptyCells > 0) {
+  while (queuedRevealedEmptyCells.length > 0) {
+    let i = queuedRevealedEmptyCells[0][0];
+    let j = queuedRevealedEmptyCells[0][1];
+    visitedEmptyCells.push([i, j]);
+
+    // open centre
     board[i][j].isRevealed = true;
-    // usual open
-    for (const [i_adj, j_adj] of adjacentCells) {
-      const [i_neighbour, j_neighbour] = [row + i_adj, col + j_adj];
-      if (
-        i_neighbour >= 0 &&
-        i_neighbour < rows &&
-        j_neighbour >= 0 &&
-        j_neighbour < cols
-      ) {
-        board[i_neighbour][j_neighbour].isRevealed = true;
+    console.log(i, j);
+    console.dir(queuedRevealedEmptyCells);
+
+    // if at [row,col] adjacentBomb ===0, open surrounding
+    if (board[i][j].adjacentBombs === 0) {
+      // loop adjacent cells
+      for (const [i_adj, j_adj] of adjacentCells) {
+        // defined adjacent cells
+        const [i_neighbour, j_neighbour] = [i + i_adj, j + j_adj];
         if (
-          board[i_neighbour][j_neighbour].isRevealed &&
-          board[i_neighbour][j_neighbour].adjacentBombs === 0
+          i_neighbour >= 0 &&
+          i_neighbour < rows &&
+          j_neighbour >= 0 &&
+          j_neighbour < cols
         ) {
-          i = i_neighbour;
-          j = j_neighbour;
-          revealedEmptyCells++;
+          board[i_neighbour][j_neighbour].isRevealed = true;
+          if (
+            board[i_neighbour][j_neighbour].adjacentBombs === 0 &&
+            !queuedRevealedEmptyCells.some(([x, y]) => {
+              return x === i_neighbour && y === j_neighbour;
+            }) &&
+            !visitedEmptyCells.some(([x, y]) => {
+              return x === i_neighbour && y === j_neighbour;
+            })
+          ) {
+            queuedRevealedEmptyCells.push([i_neighbour, j_neighbour]);
+          }
         }
       }
-      revealedEmptyCells--;
     }
+    // clear i & j remove, since careful adding done via visitedEmptyCells, no need to use .filter
+    queuedRevealedEmptyCells.shift();
   }
+
+  console.dir(visitedEmptyCells);
 
   return board;
 };
