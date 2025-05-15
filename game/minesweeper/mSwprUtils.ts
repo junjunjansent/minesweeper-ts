@@ -65,3 +65,59 @@ export const createMinesweeperBoard = ({ rows, cols, bombs }): MineCell[][] => {
 
   return board;
 };
+
+export const exploreMinesweeperBoard = (
+  row: number,
+  col: number,
+  board: MineCell[][]
+): MineCell[][] => {
+  const rows = board.length;
+  const cols = board[0].length;
+
+  let visitedEmptyCells: [number, number][] = [];
+  let queuedRevealedEmptyCells: [number, number][] = [[row, col]];
+
+  while (queuedRevealedEmptyCells.length > 0) {
+    let i = queuedRevealedEmptyCells[0][0];
+    let j = queuedRevealedEmptyCells[0][1];
+    visitedEmptyCells.push([i, j]);
+
+    // open centre
+    board[i][j].isRevealed = true;
+
+    // if at [row,col] adjacentBomb ===0, open surrounding
+    if (board[i][j].adjacentBombs === 0) {
+      // loop adjacent cells
+      for (const [i_adj, j_adj] of adjacentCells) {
+        // defined adjacent cells
+        const [i_neighbour, j_neighbour] = [i + i_adj, j + j_adj];
+        if (
+          i_neighbour >= 0 &&
+          i_neighbour < rows &&
+          j_neighbour >= 0 &&
+          j_neighbour < cols
+        ) {
+          board[i_neighbour][j_neighbour].isRevealed = true;
+          if (
+            board[i_neighbour][j_neighbour].adjacentBombs === 0 &&
+            !queuedRevealedEmptyCells.some(([x, y]) => {
+              return x === i_neighbour && y === j_neighbour;
+            }) &&
+            !visitedEmptyCells.some(([x, y]) => {
+              return x === i_neighbour && y === j_neighbour;
+            })
+          ) {
+            queuedRevealedEmptyCells.push([i_neighbour, j_neighbour]);
+          }
+        }
+      }
+    }
+    // clear i & j remove, since careful adding done via visitedEmptyCells, no need to use .filter
+    queuedRevealedEmptyCells.shift();
+  }
+
+  console.log("utils");
+  console.dir(visitedEmptyCells);
+
+  return board;
+};

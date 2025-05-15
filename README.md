@@ -1,4 +1,4 @@
-# Simple minesweeper gameß
+# Simple Minesweeper 💣 Game
 
 ## User Story:
 
