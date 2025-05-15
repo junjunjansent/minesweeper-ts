@@ -84,8 +84,6 @@ export const exploreMinesweeperBoard = (
 
     // open centre
     board[i][j].isRevealed = true;
-    console.log(i, j);
-    console.dir(queuedRevealedEmptyCells);
 
     // if at [row,col] adjacentBomb ===0, open surrounding
     if (board[i][j].adjacentBombs === 0) {
@@ -118,6 +116,7 @@ export const exploreMinesweeperBoard = (
     queuedRevealedEmptyCells.shift();
   }
 
+  console.log("utils");
   console.dir(visitedEmptyCells);
 
   return board;

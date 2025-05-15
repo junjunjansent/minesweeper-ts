@@ -6,21 +6,30 @@ import { MineCell } from "./mSwprUtils";
 export class MinesweeperView {
   private messageElmt: HTMLElement;
   private resetElmt: HTMLElement;
+  private newBoardElmt: HTMLElement;
   private btnSection: HTMLElement;
   private minefieldElmt: HTMLElement;
 
   constructor() {
     const messageElement = document.getElementById("message");
     const resetElement = document.getElementById("reset");
+    const newBoardElmt = document.getElementById("new");
     const btnSection = document.getElementById("btn-section");
     const minefieldElmt = document.getElementById("minefield");
 
-    if (!messageElement || !resetElement || !btnSection || !minefieldElmt) {
+    if (
+      !messageElement ||
+      !resetElement ||
+      !newBoardElmt ||
+      !btnSection ||
+      !minefieldElmt
+    ) {
       throw new Error("Something is missing in DOM.");
     }
 
     this.messageElmt = messageElement;
     this.resetElmt = resetElement;
+    this.newBoardElmt = newBoardElmt;
     this.btnSection = btnSection;
     this.minefieldElmt = minefieldElmt;
   }
@@ -85,7 +94,18 @@ export class MinesweeperView {
     }
   };
 
+  // ----------- update Message
+
   // ----------- Visibility
+
+  hideVisibilityNewBoardElmt = (): void => {
+    this.newBoardElmt.style.display = "none";
+  };
+
+  showVisibilityNewBoardElmt = (): void => {
+    this.newBoardElmt.style.display = "flex";
+  };
+
   hideVisibilityBtnSection = (): void => {
     this.btnSection.style.display = "none";
   };

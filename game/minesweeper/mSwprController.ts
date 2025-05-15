@@ -20,6 +20,9 @@ class MinesweeperController {
 
   private handleReset = (): void => {
     console.log("reset clicked");
+    this.view.hideVisibilityMinefieldElmt();
+    this.view.hideVisibilityNewBoardElmt();
+    this.view.showVisibilityBtnSection();
   };
 
   private handleDifficultyBtns = (event: MouseEvent): void => {
@@ -33,9 +36,10 @@ class MinesweeperController {
     }
 
     // create board
-    console.dir(event.target.dataset.label);
+    console.dir("Controller " + event.target.dataset.label);
     this.model.initBoard(event.target.dataset.label ?? "");
     this.view.hideVisibilityBtnSection();
+    this.view.showVisibilityNewBoardElmt();
     this.view.createMinefield(this.model.getBoard());
     this.view.showVisibilityMinefieldElmt();
   };

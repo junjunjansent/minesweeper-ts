@@ -17,6 +17,8 @@ export class MinesweeperModel {
     }
     this.board = createMinesweeperBoard(difficulty[difficultyLevel]);
     this.gameState = "ongoing";
+
+    console.log("Model");
     console.dir(this.board);
   };
 

@@ -45,11 +45,15 @@ h1 {
   align-items: center;
 }
 
-#reset {
+#command > button {
   font-size: 1.2rem;
   height: fit-content;
   background-color: gray;
   cursor: pointer;
+}
+
+#new {
+  display: none;
 }
 
 #btn-section {
