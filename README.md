@@ -7,7 +7,7 @@
   - Easy(9x9, 10 bombs (12%)) | Medium(15x15, 40 bombs (17%)) | High (30x30, 180 bombs (20%))
 - [x] During gameplay, User can click on the cells on the minefield board to make a move.
 - [x] During gameplay, User will be able to know how many bombs there are to be found to understand the progress of the game
-- [ ] During gameplay, User will be able to know how many remaining cells they need to click to successfully win the game
+- [x] During gameplay, User will be able to know how many remaining cells they need to click to successfully win the game
 - [x] During gameplay, User can click on the cell and be informed that this cell would have been clicked to avoid repated clicks on the same cell
 - [x] During gameplay, User will know how many bombs are adjacent to the cell (diagonal inclusive) that they have just clicked. Similar to classic minesweeper, this would be indicated via a number on the selected cell.
 - [x] When the user clicks on a cell with 0 adjacent bomb-containing cells, the board will automatically and iterateively reveal all adjacent cells to any 0 adjacent bomb-containing cells, so that the user would not need to reclick any cells and help the user further progress the game

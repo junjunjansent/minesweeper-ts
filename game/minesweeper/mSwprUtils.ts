@@ -84,6 +84,11 @@ export const exploreMinesweeperBoard = (
 
     // open centre
     board[i][j].isRevealed = true;
+    if (board[i][j].hasBomb) {
+      return board;
+    }
+
+    // early exit if bomb discovered
 
     // if at [row,col] adjacentBomb ===0, open surrounding
     if (board[i][j].adjacentBombs === 0) {

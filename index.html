@@ -12,34 +12,38 @@
     <title>Minesweeper</title>
   </head>
   <body>
-    <!-- <img src="./assets/minefield.png" alt="Minefield" width="300" /> -->
-    <h1>MINESWEEPER <span class="fa-solid fa-bomb"></span></h1>
+    <main>
+      <!-- <img src="./assets/minefield.png" alt="Minefield" width="300" /> -->
+      <h1>MINESWEEPER <span class="fa-solid fa-bomb"></span></h1>
 
-    <section id="command">
-      <h2 id="message"></h2>
-      <button id="reset">Reset</button>
-      <button id="new"></button>
-    </section>
-    <section id="btn-section">
-      <button class="btn-difficulty" data-label="easy">
-        😊<br />
-        <p>9x9 grid (10 bombs)</p>
-        Easy
-      </button>
-      <button class="btn-difficulty" data-label="medium">
-        😎<br />
-        <p>15x15 grid (40 bombs)</p>
-        Medium
-      </button>
-      <button class="btn-difficulty" data-label="hard">
-        🧠<br />
-        <p>30x30 grid (180 bombs)</p>
-        Hard
-      </button>
-    </section>
-    <div id="minefield-container">
-      <table id="minefield">
-        <!-- <tr>
+      <section id="command">
+        <div>
+          <h2 id="message"></h2>
+          <button id="reset">Reset</button>
+          <button id="new"></button>
+        </div>
+        <h4 id="stats"></h4>
+      </section>
+      <section id="btn-section">
+        <button class="btn-difficulty" data-label="easy">
+          😊<br />
+          <p>9x9 grid (10 bombs)</p>
+          Easy
+        </button>
+        <button class="btn-difficulty" data-label="medium">
+          😎<br />
+          <p>15x15 grid (40 bombs)</p>
+          Medium
+        </button>
+        <button class="btn-difficulty" data-label="hard">
+          🧠<br />
+          <p>30x30 grid (180 bombs)</p>
+          Hard
+        </button>
+      </section>
+      <div id="minefield-container">
+        <table id="minefield">
+          <!-- <tr>
           <td>help1</td>
           <td>help1</td>
           <td>help1</td>
@@ -54,7 +58,8 @@
           <td>help3</td>
           <td>help3</td>
         </tr> -->
-      </table>
-    </div>
+        </table>
+      </div>
+    </main>
   </body>
 </html>

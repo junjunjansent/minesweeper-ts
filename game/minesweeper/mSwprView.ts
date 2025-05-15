@@ -5,6 +5,7 @@ import { MineCell } from "./mSwprUtils";
 
 export class MinesweeperView {
   private messageElmt: HTMLElement;
+  private statsElmt: HTMLElement;
   private resetElmt: HTMLElement;
   private newBoardElmt: HTMLElement;
   private btnSection: HTMLElement;
@@ -12,6 +13,7 @@ export class MinesweeperView {
 
   constructor() {
     const messageElement = document.getElementById("message");
+    const statsElmt = document.getElementById("stats");
     const resetElement = document.getElementById("reset");
     const newBoardElmt = document.getElementById("new");
     const btnSection = document.getElementById("btn-section");
@@ -19,6 +21,7 @@ export class MinesweeperView {
 
     if (
       !messageElement ||
+      !statsElmt ||
       !resetElement ||
       !newBoardElmt ||
       !btnSection ||
@@ -28,6 +31,7 @@ export class MinesweeperView {
     }
 
     this.messageElmt = messageElement;
+    this.statsElmt = statsElmt;
     this.resetElmt = resetElement;
     this.newBoardElmt = newBoardElmt;
     this.btnSection = btnSection;
@@ -116,9 +120,11 @@ export class MinesweeperView {
           continue;
         }
 
-        // update to all bombs only
-        if (board[i][j].hasBomb) {
+        if (!board[i][j].isRevealed) {
           td.dataset.state = "end-revealed";
+        }
+
+        if (board[i][j].hasBomb) {
           td.innerHTML = '<i class="fa-solid fa-bomb"></i>';
         }
       }
@@ -152,10 +158,13 @@ export class MinesweeperView {
     this.minefieldElmt.style.opacity = "1";
   };
 
-  // ----------- update Message
+  // ----------- update Texts
 
   updateMessageElmt(msg: string): void {
     this.messageElmt.textContent = msg;
+  }
+  updateStatsElmt(html: string): void {
+    this.statsElmt.innerHTML = html;
   }
 
   // ----------- Visibility

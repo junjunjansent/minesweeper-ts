@@ -32,21 +32,35 @@ body * {
   font-family: "VT323", system-ui;
 }
 
+main {
+  padding: 2rem;
+}
+
 h1 {
   font-family: "Press Start 2P", system-ui, sans-serif;
   display: flex;
-  margin: 3rem 0rem 0rem;
+  margin: 1.5rem 0rem;
   justify-content: center;
 }
 
+h2,
+h3,
+h4 {
+  margin: 0.5rem 0;
+}
+
 #command {
+  margin: 1rem 0rem;
+}
+
+#command > div {
   display: flex;
-  gap: 1rem;
+  gap: 0rem 1rem;
   justify-content: center;
   align-items: center;
 }
 
-#command > button {
+#command > div > button {
   font-size: 1.2rem;
   height: fit-content;
   background-color: gray;

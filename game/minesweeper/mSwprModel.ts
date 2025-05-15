@@ -55,12 +55,6 @@ export class MinesweeperModel {
     return this.board[row][col].hasBomb;
   };
 
-  checkWinCondition = (): Boolean => {
-    const { bombs } = this.difficulty[this.currentDifficultyLevel];
-    console.log("model: " + countNotRevealedMineCells(this.board));
-    return bombs === countNotRevealedMineCells(this.board);
-  };
-
   // ---------- Getters
 
   getDifficulty = (): unknown => {
@@ -71,8 +65,17 @@ export class MinesweeperModel {
     return this.currentDifficultyLevel;
   };
 
+  getCurrentBombQty = (): number => {
+    const { bombs } = this.difficulty[this.currentDifficultyLevel];
+    return bombs;
+  };
+
   getBoard = (): MineCell[][] => {
     return this.board;
+  };
+
+  getNotRevealedMineCells = (): number => {
+    return countNotRevealedMineCells(this.board);
   };
 
   getGameState = (): string => {
