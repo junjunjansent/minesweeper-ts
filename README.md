@@ -22,6 +22,11 @@
 - [ ] Audio when player clicks on a bomb-containing cell
 - [ ] Navbar as a foundation for portfolio building
 - [ ] Minefield can be adjusted to be played on mobile
-- [ ] Explore if data can be stored on client localCache
 - [ ] Deploy if possible
 - [ ] See if can do testing
+
+## Personal Learning Pointers:
+
+- [ ] Refactor 'difficulty' into a class to allow for further difficulty levels to be added
+- [ ] Explore the use of Sets in minesweeper logic
+- [ ] Explore if data can be stored on client localCache
