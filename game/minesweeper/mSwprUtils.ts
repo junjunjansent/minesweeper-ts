@@ -5,13 +5,13 @@ export class MineCell {
   public adjacentBombs: number;
   public hasBomb: Boolean;
   public isRevealed: Boolean;
-  public hasFlag: Boolean;
+  public isFlagged: Boolean;
 
   constructor(adjacentBombs, hasBomb, isRevealed, hasFlag) {
     this.adjacentBombs = adjacentBombs;
     this.hasBomb = hasBomb;
     this.isRevealed = isRevealed;
-    this.hasFlag = hasFlag;
+    this.isFlagged = hasFlag;
   }
 }
 // ------------------ Fnuctions (but utilise difficulty and MineCell class)
@@ -129,12 +129,23 @@ export const exploreMinesweeperBoard = (
 
 export const countNotRevealedMineCells = (board: MineCell[][]): number => {
   let result: number = 0;
-  const rows = board.length;
-  const cols = board[0].length;
 
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-      if (!board[i][j].isRevealed) {
+  for (const row of board) {
+    for (const minecell of row) {
+      if (!minecell.isRevealed) {
+        result++;
+      }
+    }
+  }
+  return result;
+};
+
+export const countFlaggedMineCells = (board: MineCell[][]): number => {
+  let result: number = 0;
+
+  for (const row of board) {
+    for (const minecell of row) {
+      if (minecell.isFlagged) {
         result++;
       }
     }
