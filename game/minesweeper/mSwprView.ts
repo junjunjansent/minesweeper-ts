@@ -68,6 +68,7 @@ export class MinesweeperView {
         td.dataset.row = i.toString();
         td.dataset.col = j.toString();
         td.dataset.state = "not-revealed";
+        // td.dataset.marker = "flagged";
         tr.append(td);
       }
     }
@@ -170,12 +171,10 @@ export class MinesweeperView {
   // ----------- Visibility
 
   hideVisibilityNewBoardBtnElmt = (): void => {
-    this.newBoardElmt.innerText = "";
     this.newBoardElmt.style.display = "none";
   };
 
-  showVisibilityNewBoardBtnElmt = (text: string): void => {
-    this.newBoardElmt.innerText = text;
+  showVisibilityNewBoardBtnElmt = (): void => {
     this.newBoardElmt.style.display = "flex";
   };
 

@@ -41,25 +41,23 @@ class MinesweeperController {
     this.view.showVisibilityMinefieldElmt();
 
     // update Elmts: buttons
-    this.view.showVisibilityNewBoardBtnElmt(`New '${difficultyLevel}' Board`);
+    this.view.showVisibilityNewBoardBtnElmt();
     this.view.hideVisibilityBtnSection();
 
     // update Elmts: message
     const bombQty = this.model.getCurrentBombQty();
     const NotRevealedMineCells = this.model.getNotRevealedMineCells();
-    this.view.updateMessageElmt(`${bombQty} hidden bombs... Good luck!`);
+    this.view.updateMessageElmt(`${bombQty}💣s hidden... Good luck!`);
     this.view.updateStatsElmt(
-      `${0} <span class="fa-solid fa-flag"></span> used &nbsp &nbsp ${
+      `${
         NotRevealedMineCells - bombQty
-      } <span class="fa-regular fa-square"></span> more to go!`
+      } <span class="fa-regular fa-square"></span> more to go! &nbsp &nbsp  ${0} <span class="fa-regular fa-flag"></span> used`
     );
   };
 
   // ---------- Input Handlers
 
   private handleReset = (): void => {
-    console.log("reset clicked");
-
     // update Elmts: minefield
     this.view.clearMinefield();
     this.view.hideVisibilityMinefieldElmt();
@@ -74,7 +72,6 @@ class MinesweeperController {
   };
 
   private handleNewBoard = (): void => {
-    console.log("new board clicked");
     this.initMinefield();
   };
 
@@ -112,10 +109,10 @@ class MinesweeperController {
     const NotRevealedMineCells = this.model.getNotRevealedMineCells();
 
     // update variables for view
-    let msg = `${bombQty} hidden bombs... Good luck!`;
-    let statsHTML = `${0} <span class="fa-solid fa-flag"></span> used &nbsp &nbsp ${
+    let msg = `${bombQty}💣s hidden... Good luck!`;
+    let statsHTML = `${
       NotRevealedMineCells - bombQty
-    } <span class="fa-regular fa-square"></span> more to go!`;
+    } <span class="fa-regular fa-square"></span> more to go! &nbsp &nbsp  ${0} <span class="fa-regular fa-flag"></span> used`;
 
     if (this.model.checkBombStatus(row, col)) {
       // bomb discovered, so LOSE condition

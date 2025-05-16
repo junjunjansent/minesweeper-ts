@@ -20,11 +20,23 @@
         <div>
           <h2 id="message"></h2>
           <button id="reset">Reset</button>
-          <button id="new"></button>
+          <button id="new" data-in="emoji" aria-label="new-board">
+            <span class="fa-solid fa-arrows-rotate"></span>
+          </button>
         </div>
-        <h4 id="stats"></h4>
+        <div>
+          <h4 id="stats"></h4>
+          <button id="flag" data-in="emoji" aria-label="flag">
+            <span class="fa-solid fa-flag"></span>
+          </button>
+        </div>
       </section>
       <section id="btn-section">
+        <button class="btn-difficulty" data-label="baby">
+          👶<br />
+          <p>5x5 grid (3 bombs)</p>
+          Baby
+        </button>
         <button class="btn-difficulty" data-label="easy">
           😊<br />
           <p>9x9 grid (10 bombs)</p>
@@ -32,12 +44,12 @@
         </button>
         <button class="btn-difficulty" data-label="medium">
           😎<br />
-          <p>15x15 grid (40 bombs)</p>
+          <p>12x12 grid (25 bombs)</p>
           Medium
         </button>
         <button class="btn-difficulty" data-label="hard">
           🧠<br />
-          <p>30x30 grid (180 bombs)</p>
+          <p>20x20 grid (80 bombs)</p>
           Hard
         </button>
       </section>

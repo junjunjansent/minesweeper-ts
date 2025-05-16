@@ -22,6 +22,7 @@ body::after {
   height: 30%;
   background-image: url(../assets/minefield_sign.png);
   background-size: contain;
+  background-position: bottom;
   background-repeat: no-repeat;
   opacity: 0.4;
   pointer-events: none;
@@ -60,16 +61,33 @@ h4 {
   align-items: center;
 }
 
-#command > div > button {
+#command button {
   font-size: 1.2rem;
   height: fit-content;
-  background-color: gray;
+  background-color: steelblue;
   cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+#command button[data-in="emoji"] {
+  padding: 0.2rem 0.5rem;
+}
+
+#command button:hover {
+  background-color: darkgray;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 #new {
   display: none;
   max-width: 8rem;
+}
+
+#flag {
+  color: maroon;
+  text-shadow: 0px 0px 6px whie;
 }
 
 #btn-section {
@@ -126,6 +144,7 @@ h4 {
 }
 
 #minefield td {
+  position: relative;
   border: 1px;
   padding: 0.1em;
   min-width: 2rem;
@@ -139,13 +158,25 @@ h4 {
   vertical-align: center;
 }
 
-#minefield td[data-state="revealed"] {
-  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
-  background-color: lightskyblue;
+#minefield td[data-marker="flagged"]:after {
+  content: "\f024"; /* fa-flag */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900; /* Solid style */
+  color: crimson;
+  position: absolute;
+  top: 0.2rem;
+  right: 0.3rem;
+  font-size: 0.8rem;
+  pointer-events: none;
 }
 
 #minefield td[data-state="end-revealed"] {
   background-color: gray;
+}
+
+#minefield td[data-state="revealed"] {
+  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.3);
+  background-color: lightskyblue;
 }
 
 #minefield td[data-state="end-error"] {

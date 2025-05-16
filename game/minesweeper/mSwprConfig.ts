@@ -1,7 +1,8 @@
 export const difficulty = {
+  baby: { rows: 5, cols: 5, bombs: 3 },
   easy: { rows: 9, cols: 9, bombs: 10 },
-  medium: { rows: 15, cols: 15, bombs: 40 },
-  hard: { rows: 30, cols: 30, bombs: 180 },
+  medium: { rows: 12, cols: 12, bombs: 25 },
+  hard: { rows: 20, cols: 20, bombs: 80 },
 };
 
 export const adjacentCells = [

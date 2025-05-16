@@ -20,6 +20,7 @@
 
 ## Additional User Stories:
 
+- [ ] Check utility of Game Status
 - [ ] Refactor table into CSS grid
 - [ ] Minefield can be adjusted to be played on mobile
 - [x] Good UI when hovering across buttons
