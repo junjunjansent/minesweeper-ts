@@ -84,6 +84,7 @@ export const exploreMinesweeperBoard = (
 
     // open centre
     board[i][j].isRevealed = true;
+    board[i][j].isFlagged = false;
     if (board[i][j].hasBomb) {
       return board;
     }
@@ -103,6 +104,7 @@ export const exploreMinesweeperBoard = (
           j_neighbour < cols
         ) {
           board[i_neighbour][j_neighbour].isRevealed = true;
+          board[i_neighbour][j_neighbour].isFlagged = false;
           if (
             board[i_neighbour][j_neighbour].adjacentBombs === 0 &&
             !queuedRevealedEmptyCells.some(([x, y]) => {

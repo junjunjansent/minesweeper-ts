@@ -16,11 +16,11 @@
 - [x] When the user manages to reveal all non-bomb-containing cells, the board will reveal all cells and inform the user that the game has ended and they have won
 - [x] User can re-initialise the game whenever they want -> via Reset Button
 - [x] User can regenerate another board of the current difficulty they are playing on whenever they want
-- [ ] During gameplay, user has the option to utilise flag markers & no. of flags used
+- [x] During gameplay, user has the option to utilise flag markers & no. of flags used
+  - [ ] Format the switch nicely with the stats
 
 ## Additional User Stories:
 
-- [ ] Check utility of Game Status
 - [ ] Refactor table into CSS grid
 - [ ] Minefield can be adjusted to be played on mobile
 - [x] Good UI when hovering across buttons
@@ -34,7 +34,8 @@
 
 ## Personal Learning Pointers:
 
-- [ ] See if can do testing
+- [ ] Check utility of Game Status
 - [ ] Refactor 'difficulty' into a class to allow for further difficulty levels to be added
+- [ ] See if can do testing
 - [ ] Explore the use of Sets in minesweeper logic
 - [ ] Explore if data can be stored on client localCache

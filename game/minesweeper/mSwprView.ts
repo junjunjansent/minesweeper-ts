@@ -5,25 +5,31 @@ import { MineCell } from "./mSwprUtils";
 
 export class MinesweeperView {
   private messageElmt: HTMLElement;
+  private statsBarElmt: HTMLElement;
   private statsElmt: HTMLElement;
   private resetElmt: HTMLElement;
   private newBoardElmt: HTMLElement;
+  private flagSwitchElmt: HTMLElement;
   private btnSection: HTMLElement;
   private minefieldElmt: HTMLElement;
 
   constructor() {
     const messageElement = document.getElementById("message");
+    const statsBarElmt = document.getElementById("stats-bar");
     const statsElmt = document.getElementById("stats");
     const resetElement = document.getElementById("reset");
     const newBoardElmt = document.getElementById("new");
+    const flagSwitchElmt = document.getElementById("flag-state");
     const btnSection = document.getElementById("btn-section");
     const minefieldElmt = document.getElementById("minefield");
 
     if (
       !messageElement ||
+      !statsBarElmt ||
       !statsElmt ||
       !resetElement ||
       !newBoardElmt ||
+      !flagSwitchElmt ||
       !btnSection ||
       !minefieldElmt
     ) {
@@ -31,9 +37,11 @@ export class MinesweeperView {
     }
 
     this.messageElmt = messageElement;
+    this.statsBarElmt = statsBarElmt;
     this.statsElmt = statsElmt;
     this.resetElmt = resetElement;
     this.newBoardElmt = newBoardElmt;
+    this.flagSwitchElmt = flagSwitchElmt;
     this.btnSection = btnSection;
     this.minefieldElmt = minefieldElmt;
   }
@@ -45,6 +53,10 @@ export class MinesweeperView {
 
   bindNewBoardBtn(controllerHandler: () => void): void {
     this.newBoardElmt.addEventListener("click", controllerHandler);
+  }
+
+  bindFlagSwitch(controllerHandler: () => void): void {
+    this.flagSwitchElmt.addEventListener("click", controllerHandler);
   }
 
   bindDifficultyBtns(controllerHandler: (event: MouseEvent) => void): void {
@@ -89,6 +101,7 @@ export class MinesweeperView {
 
         if (board[i][j].isRevealed) {
           td.dataset.state = "revealed";
+          td.dataset.marker = "";
 
           // further updating to revealed cells
           if (board[i][j].hasBomb) {
@@ -98,6 +111,26 @@ export class MinesweeperView {
           } else if (board[i][j].adjacentBombs === 0) {
             td.textContent = "";
           }
+        }
+      }
+    }
+  };
+
+  updateFlaggedMinefield = (board: MineCell[][]): void => {
+    const rows = board.length;
+    const cols = board[0].length;
+
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        const td = document.querySelector(
+          `td[data-row="${i}"][data-col="${j}"]`
+        );
+        if (!(td instanceof HTMLElement)) {
+          continue;
+        }
+
+        if (board[i][j].isFlagged) {
+          td.dataset.marker = "flagged";
         }
       }
     }
@@ -169,6 +202,14 @@ export class MinesweeperView {
   }
 
   // ----------- Visibility
+
+  hideVisibilityStatsBarElmt = (): void => {
+    this.statsBarElmt.style.display = "none";
+  };
+
+  showVisibilityStatsBarElmt = (): void => {
+    this.statsBarElmt.style.display = "flex";
+  };
 
   hideVisibilityNewBoardBtnElmt = (): void => {
     this.newBoardElmt.style.display = "none";

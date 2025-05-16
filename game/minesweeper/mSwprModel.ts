@@ -3,6 +3,7 @@ import {
   createMinesweeperBoard,
   exploreMinesweeperBoard,
   countNotRevealedMineCells,
+  countFlaggedMineCells,
 } from "./mSwprUtils";
 import { difficulty } from "./mSwprConfig";
 
@@ -11,6 +12,7 @@ export class MinesweeperModel {
   private difficulty; // NEED TO BETTER DEFINE
   private board: MineCell[][];
   private currentDifficultyLevel: string;
+  private cursorFlagMode: Boolean;
   private gameState: "pendingStart" | "ongoing" | "finished";
 
   // ---------- Loaders
@@ -18,6 +20,14 @@ export class MinesweeperModel {
   // NEED TO BETTER DEFINE
   loadDifficulty = (): void => {
     this.difficulty = difficulty;
+  };
+
+  loadGameState = (): void => {
+    this.gameState = "ongoing";
+  };
+
+  loadCursorFlagMode = (): void => {
+    this.cursorFlagMode = false;
   };
 
   // NEED to look at if can replace difficultyLevel with currentDifficulty Level
@@ -29,7 +39,6 @@ export class MinesweeperModel {
 
     const difficultyValues = this.difficulty[this.currentDifficultyLevel];
     this.board = createMinesweeperBoard(difficultyValues);
-    this.gameState = "ongoing";
 
     console.log("Model");
     console.dir(this.board);
@@ -43,6 +52,14 @@ export class MinesweeperModel {
 
   setBoard = (row: number, col: number): void => {
     exploreMinesweeperBoard(row, col, this.board);
+  };
+
+  toggleFlagOnMineCell = (row: number, col: number): void => {
+    this.board[row][col].isFlagged = !this.board[row][col].isFlagged;
+  };
+
+  toggleCursorFlagMode = (): void => {
+    this.cursorFlagMode = !this.cursorFlagMode;
   };
 
   setGameState = (status: "pendingStart" | "ongoing" | "finished"): void => {
@@ -76,6 +93,14 @@ export class MinesweeperModel {
 
   getNotRevealedMineCells = (): number => {
     return countNotRevealedMineCells(this.board);
+  };
+
+  getFlaggedMineCells = (): number => {
+    return countFlaggedMineCells(this.board);
+  };
+
+  getCursorFlagMode = (): Boolean => {
+    return this.cursorFlagMode;
   };
 
   getGameState = (): string => {

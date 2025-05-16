@@ -13,6 +13,7 @@ class MinesweeperController {
     // bindEventListeners
     this.view.bindResetBtn(this.handleReset);
     this.view.bindNewBoardBtn(this.handleNewBoard);
+    this.view.bindFlagSwitch(this.handleFlagState);
     this.view.bindDifficultyBtns(this.handleDifficultyBtns);
     this.view.bindMinefieldElmt(this.handleMinefieldInputs);
   }
@@ -30,6 +31,10 @@ class MinesweeperController {
 
     this.model.setCurrentDifficultyLevel(difficultyLevel);
 
+    // init game states & cursor mode
+    this.model.loadGameState();
+    this.model.loadCursorFlagMode();
+
     // create board
     console.dir("Controller " + difficultyLevel);
     this.model.loadBoard(difficultyLevel);
@@ -40,18 +45,24 @@ class MinesweeperController {
     this.view.createMinefield(this.model.getBoard());
     this.view.showVisibilityMinefieldElmt();
 
-    // update Elmts: buttons
-    this.view.showVisibilityNewBoardBtnElmt();
+    // update Elmts: difficulty buttons
     this.view.hideVisibilityBtnSection();
 
-    // update Elmts: message
+    // define variables
     const bombQty = this.model.getCurrentBombQty();
     const NotRevealedMineCells = this.model.getNotRevealedMineCells();
-    this.view.updateMessageElmt(`${bombQty}💣s hidden... Good luck!`);
+    const FlaggedMineCells = this.model.getFlaggedMineCells();
+
+    // update Elmts: command
+    this.view.updateMessageElmt(`${bombQty} 💣s hidden... Good luck!`);
+    this.view.showVisibilityNewBoardBtnElmt();
+
+    // update Elmts: message
+    this.view.showVisibilityStatsBarElmt();
     this.view.updateStatsElmt(
       `${
         NotRevealedMineCells - bombQty
-      } <span class="fa-regular fa-square"></span> more to go! &nbsp &nbsp  ${0} <span class="fa-regular fa-flag"></span> used`
+      } <span class="fa-regular fa-square"></span> more to go! &nbsp &nbsp  ${FlaggedMineCells} <span class="fa-regular fa-flag"></span> used`
     );
   };
 
@@ -73,6 +84,10 @@ class MinesweeperController {
 
   private handleNewBoard = (): void => {
     this.initMinefield();
+  };
+
+  private handleFlagState = (): void => {
+    this.model.toggleCursorFlagMode();
   };
 
   private handleDifficultyBtns = (event: MouseEvent): void => {
@@ -99,20 +114,31 @@ class MinesweeperController {
       return;
     }
 
-    // update game model state
+    // define variable
     const row = parseInt(event.target.dataset.row ?? "-1");
     const col = parseInt(event.target.dataset.col ?? "-1");
+
+    // handle flagmode & early return
+    if (this.model.getCursorFlagMode()) {
+      this.model.toggleFlagOnMineCell(row, col);
+      this.view.updateFlaggedMinefield(this.model.getBoard());
+      return;
+    }
+
+    // update game model state
     this.model.setBoard(row, col); // model: via utils: open all adjacent rows
     this.view.updateMinefield(this.model.getBoard());
 
+    // define variables
     const bombQty = this.model.getCurrentBombQty();
     const NotRevealedMineCells = this.model.getNotRevealedMineCells();
+    const FlaggedMineCells = this.model.getFlaggedMineCells();
 
     // update variables for view
-    let msg = `${bombQty}💣s hidden... Good luck!`;
+    let msg = `${bombQty} 💣s hidden... Good luck!`;
     let statsHTML = `${
       NotRevealedMineCells - bombQty
-    } <span class="fa-regular fa-square"></span> more to go! &nbsp &nbsp  ${0} <span class="fa-regular fa-flag"></span> used`;
+    } <span class="fa-regular fa-square"></span> more to go! &nbsp &nbsp  ${FlaggedMineCells} <span class="fa-regular fa-flag"></span> used`;
 
     if (this.model.checkBombStatus(row, col)) {
       // bomb discovered, so LOSE condition
