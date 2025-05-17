@@ -5,15 +5,15 @@ import {
   countNotRevealedMineCells,
   countFlaggedMineCells,
 } from "./mSwprUtils";
-import { difficulty } from "./mSwprConfig";
+import { difficulty, GameStatus } from "./mSwprConfig";
 
 export class MinesweeperModel {
   //   private mineCell: MineCell;
   private difficulty; // NEED TO BETTER DEFINE
-  private board: MineCell[][];
+  private currentGameStatus: GameStatus;
   private currentDifficultyLevel: string;
   private cursorFlagMode: Boolean;
-  private gameState: "pendingStart" | "ongoing" | "finished";
+  private board: MineCell[][];
 
   // ---------- Loaders
 
@@ -22,11 +22,7 @@ export class MinesweeperModel {
     this.difficulty = difficulty;
   };
 
-  loadGameState = (): void => {
-    this.gameState = "ongoing";
-  };
-
-  loadCursorFlagMode = (): void => {
+  loadFalseCursorFlagMode = (): void => {
     this.cursorFlagMode = false;
   };
 
@@ -39,9 +35,6 @@ export class MinesweeperModel {
 
     const difficultyValues = this.difficulty[this.currentDifficultyLevel];
     this.board = createMinesweeperBoard(difficultyValues);
-
-    console.log("Model");
-    console.dir(this.board);
   };
 
   // ---------- Setters
@@ -62,22 +55,29 @@ export class MinesweeperModel {
     this.cursorFlagMode = !this.cursorFlagMode;
   };
 
-  setGameState = (status: "pendingStart" | "ongoing" | "finished"): void => {
-    this.gameState = status;
+  setCurrentGameStatus = (status: GameStatus): void => {
+    this.currentGameStatus = status;
   };
 
   // ---------- Game Logic
 
-  checkBombStatus = (row: number, col: number): Boolean => {
+  checkLoseCondition = (row: number, col: number): Boolean => {
     return this.board[row][col].hasBomb;
   };
 
+  checkWinCondition = () => {
+    const { bombs } = this.difficulty[this.currentDifficultyLevel];
+    return bombs === countNotRevealedMineCells(this.board);
+  };
   // ---------- Getters
 
   getDifficulty = (): unknown => {
     return this.difficulty;
   };
 
+  getCurrentGameStatus = (): string => {
+    return this.currentGameStatus;
+  };
   getCurrentDifficultyLevel = (): string => {
     return this.currentDifficultyLevel;
   };
@@ -101,9 +101,5 @@ export class MinesweeperModel {
 
   getCursorFlagMode = (): Boolean => {
     return this.cursorFlagMode;
-  };
-
-  getGameState = (): string => {
-    return this.gameState;
   };
 }

@@ -61,7 +61,12 @@ h4 {
   align-items: center;
 }
 
+#command > #stats {
+  display: none;
+}
+
 #command button {
+  display: none;
   font-size: 1.2rem;
   height: fit-content;
   background-color: steelblue;
@@ -78,11 +83,6 @@ h4 {
 #command button:hover {
   background-color: darkgray;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-#new {
-  display: none;
-  max-width: 8rem;
 }
 
 /* #flag {
@@ -160,8 +160,8 @@ h4 {
 }
 
 #minefield td[data-marker="flagged"]:after {
-  content: "\f024"; /* fa-flag */
   font-family: "Font Awesome 6 Free";
+  content: "\f024"; /* fa-flag */
   font-weight: 900; /* Solid style */
   color: crimson;
   position: absolute;
@@ -169,6 +169,10 @@ h4 {
   right: 0.3rem;
   font-size: 0.8rem;
   pointer-events: none;
+}
+
+#minefield td[data-marker="flagged"] {
+  background-color: lightcoral;
 }
 
 #minefield td[data-state="end-revealed"] {

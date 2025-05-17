@@ -1,5 +1,6 @@
 import { MinesweeperModel } from "./mSwprModel";
 import { MinesweeperView } from "./mSwprView";
+import { GameStatus } from "./mSwprConfig";
 
 class MinesweeperController {
   private model: MinesweeperModel;
@@ -12,7 +13,7 @@ class MinesweeperController {
 
     // bindEventListeners
     this.view.bindResetBtn(this.handleReset);
-    this.view.bindNewBoardBtn(this.handleNewBoard);
+    this.view.bindRefreshBoardBtn(this.handleRefreshBoard);
     this.view.bindFlagSwitch(this.handleFlagState);
     this.view.bindDifficultyBtns(this.handleDifficultyBtns);
     this.view.bindMinefieldElmt(this.handleMinefieldInputs);
@@ -22,8 +23,9 @@ class MinesweeperController {
 
   private init = () => {
     this.model.loadDifficulty();
+    this.model.setCurrentGameStatus(GameStatus.PendingDifficulty);
     this.view.updateMessageElmt("Click to Begin :)");
-    this.view.updateStatsElmt(``);
+    // this.view.hideVisibilityStatsBarElmt();
   };
 
   private initMinefield = (level?: string) => {
@@ -31,12 +33,9 @@ class MinesweeperController {
 
     this.model.setCurrentDifficultyLevel(difficultyLevel);
 
-    // init game states & cursor mode
-    this.model.loadGameState();
-    this.model.loadCursorFlagMode();
-
     // create board
     console.dir("Controller " + difficultyLevel);
+    console.dir(this.model.getBoard());
     this.model.loadBoard(difficultyLevel);
 
     // update Elmts: clear and create minefield
@@ -47,23 +46,50 @@ class MinesweeperController {
 
     // update Elmts: difficulty buttons
     this.view.hideVisibilityBtnSection();
+  };
 
-    // define variables
-    const bombQty = this.model.getCurrentBombQty();
-    const NotRevealedMineCells = this.model.getNotRevealedMineCells();
-    const FlaggedMineCells = this.model.getFlaggedMineCells();
+  private configCommand = (): void => {
+    switch (this.model.getCurrentGameStatus()) {
+      case GameStatus.PendingDifficulty:
+        this.view.updateMessageElmt("Click to Begin :)");
+        this.view.hideVisibilityCtrlBtns();
+        this.view.hideVisibilityStatsPanelElmt();
+        this.view.hideVisibilityStatsFlagSwitchElmt();
+        break;
+      case GameStatus.Ongoing:
+        const bombQty = this.model.getCurrentBombQty();
+        const NotRevealedMineCells = this.model.getNotRevealedMineCells();
+        const statsProgress = NotRevealedMineCells - bombQty;
+        const statsFlagged = this.model.getFlaggedMineCells();
 
-    // update Elmts: command
-    this.view.updateMessageElmt(`${bombQty} 💣s hidden... Good luck!`);
-    this.view.showVisibilityNewBoardBtnElmt();
+        // message texts
+        const bombQtyMsg = `${bombQty} 💣s hidden... Good luck!`;
+        const statsProgressHTML = `${statsProgress} <span class="fa-regular fa-square"></span> more to go!`;
+        const statsFlaggedHTML = `${statsFlagged} <span class="fa-regular fa-flag"></span> used`;
 
-    // update Elmts: message
-    this.view.showVisibilityStatsBarElmt();
-    this.view.updateStatsElmt(
-      `${
-        NotRevealedMineCells - bombQty
-      } <span class="fa-regular fa-square"></span> more to go! &nbsp &nbsp  ${FlaggedMineCells} <span class="fa-regular fa-flag"></span> used`
-    );
+        this.view.updateMessageElmt(bombQtyMsg);
+        this.view.showVisibilityCtrlBtns();
+        this.view.showVisibilityStatsPanelElmt();
+        this.view.showVisibilityStatsFlagSwitchElmt();
+        this.view.updateStatsPanel(statsProgressHTML, statsFlaggedHTML);
+        break;
+      case GameStatus.FinishedWin:
+        this.view.updateMessageElmt(`🤩!!You WON!!🤩 `);
+        this.view.updateStatsPanel(`Wanna play again?`, "");
+        this.view.hideVisibilityStatsFlagSwitchElmt();
+        break;
+      case GameStatus.FinishedLose:
+        this.view.updateMessageElmt(`You Lost! 😔`);
+        this.view.updateStatsPanel(`Wanna play again?`, "");
+        this.view.hideVisibilityStatsFlagSwitchElmt();
+        break;
+      default:
+        break;
+    }
+
+    if (!this.model.getCursorFlagMode()) {
+      this.view.uncheckStatsFlagSwitchElmt();
+    }
   };
 
   // ---------- Input Handlers
@@ -74,20 +100,33 @@ class MinesweeperController {
     this.view.hideVisibilityMinefieldElmt();
 
     // update Elmts: buttons
-    this.view.hideVisibilityNewBoardBtnElmt();
     this.view.showVisibilityBtnSection();
 
-    // update Elmts: texts
-    this.view.updateMessageElmt("Click to Begin :)");
-    this.view.updateStatsElmt(``);
+    // affect Game Status
+    this.model.setCurrentGameStatus(GameStatus.PendingDifficulty);
+
+    // update Elmts: command
+    this.configCommand();
   };
 
-  private handleNewBoard = (): void => {
+  private handleRefreshBoard = (): void => {
     this.initMinefield();
+
+    // affect cursor mode
+    this.model.loadFalseCursorFlagMode();
+
+    // affect Game Status
+    this.model.setCurrentGameStatus(GameStatus.Ongoing);
+
+    // update Elmts: command
+    this.configCommand();
   };
 
   private handleFlagState = (): void => {
     this.model.toggleCursorFlagMode();
+
+    //NEED TO REMOVE
+    this.view.getFlagSwitchState();
   };
 
   private handleDifficultyBtns = (event: MouseEvent): void => {
@@ -102,6 +141,15 @@ class MinesweeperController {
 
     const difficultyLevel = event.target.dataset.label ?? "";
     this.initMinefield(difficultyLevel);
+
+    // affect cursor mode
+    this.model.loadFalseCursorFlagMode();
+
+    // affect Game Status
+    this.model.setCurrentGameStatus(GameStatus.Ongoing);
+
+    // affect cursor mode
+    this.configCommand();
   };
 
   private handleMinefieldInputs = (event: MouseEvent): void => {
@@ -122,50 +170,31 @@ class MinesweeperController {
     if (this.model.getCursorFlagMode()) {
       this.model.toggleFlagOnMineCell(row, col);
       this.view.updateFlaggedMinefield(this.model.getBoard());
+      this.configCommand();
       return;
     }
 
-    // update game model state
+    // update board state
     this.model.setBoard(row, col); // model: via utils: open all adjacent rows
     this.view.updateMinefield(this.model.getBoard());
 
-    // define variables
-    const bombQty = this.model.getCurrentBombQty();
-    const NotRevealedMineCells = this.model.getNotRevealedMineCells();
-    const FlaggedMineCells = this.model.getFlaggedMineCells();
-
-    // update variables for view
-    let msg = `${bombQty} 💣s hidden... Good luck!`;
-    let statsHTML = `${
-      NotRevealedMineCells - bombQty
-    } <span class="fa-regular fa-square"></span> more to go! &nbsp &nbsp  ${FlaggedMineCells} <span class="fa-regular fa-flag"></span> used`;
-
-    if (this.model.checkBombStatus(row, col)) {
-      // bomb discovered, so LOSE condition
-
+    if (this.model.checkLoseCondition(row, col)) {
+      this.model.setCurrentGameStatus(GameStatus.FinishedLose);
       // update Elmts: minefield - open and gray out minefield & highlight error
       this.view.openMinefield(this.model.getBoard());
       this.view.greyMinefieldElmt();
       this.view.redMineCellElmt(row, col);
-
-      // update Elmts: texts - define
-      msg = `You Lost! 😔`;
-      statsHTML = `Wanna play again?`;
-    } else if (bombQty === NotRevealedMineCells) {
-      // so WIN condition
-
+    } else if (this.model.checkWinCondition()) {
+      this.model.setCurrentGameStatus(GameStatus.FinishedWin);
       // update Elmts: minefield - open and gray out minefield
       this.view.openMinefield(this.model.getBoard());
       this.view.greyMinefieldElmt();
-
-      // update Elmts: texts - define
-      msg = `🤩!!You WON!!🤩 `;
-      statsHTML = `Wanna play again?`;
+    } else {
+      // affect Game Status
+      this.model.setCurrentGameStatus(GameStatus.Ongoing);
     }
 
-    // update Elmts: texts
-    this.view.updateMessageElmt(msg);
-    this.view.updateStatsElmt(statsHTML);
+    this.configCommand();
   };
 }
 

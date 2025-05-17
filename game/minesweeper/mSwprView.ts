@@ -5,43 +5,58 @@ import { MineCell } from "./mSwprUtils";
 
 export class MinesweeperView {
   private messageElmt: HTMLElement;
-  private statsBarElmt: HTMLElement;
-  private statsElmt: HTMLElement;
-  private resetElmt: HTMLElement;
-  private newBoardElmt: HTMLElement;
-  private flagSwitchElmt: HTMLElement;
+  private statsPanelElmt: HTMLElement;
+  private statsProgressElmt: HTMLElement;
+  private statsFlaggedElmt: HTMLElement;
+  private resetElmt: HTMLButtonElement;
+  private refreshBoardElmt: HTMLButtonElement;
+  private statsFlagSwitchElmt: HTMLInputElement;
   private btnSection: HTMLElement;
   private minefieldElmt: HTMLElement;
 
   constructor() {
     const messageElement = document.getElementById("message");
-    const statsBarElmt = document.getElementById("stats-bar");
-    const statsElmt = document.getElementById("stats");
+    const statsPanelElmt = document.getElementById("stats");
+    const statsProgressElmt = document.getElementById("stats-progress");
+    const statsFlaggedElmt = document.getElementById("stats-flagged");
     const resetElement = document.getElementById("reset");
-    const newBoardElmt = document.getElementById("new");
-    const flagSwitchElmt = document.getElementById("flag-state");
+    const refreshBoardElmt = document.getElementById("refresh");
+    const statsFlagSwitchElmt = document.getElementById("flag-state");
     const btnSection = document.getElementById("btn-section");
     const minefieldElmt = document.getElementById("minefield");
 
     if (
       !messageElement ||
-      !statsBarElmt ||
-      !statsElmt ||
+      !statsPanelElmt ||
+      !statsProgressElmt ||
+      !statsFlaggedElmt ||
       !resetElement ||
-      !newBoardElmt ||
-      !flagSwitchElmt ||
+      !refreshBoardElmt ||
+      !statsFlagSwitchElmt ||
       !btnSection ||
       !minefieldElmt
     ) {
       throw new Error("Something is missing in DOM.");
     }
 
+    if (
+      !(resetElement instanceof HTMLButtonElement) ||
+      !(refreshBoardElmt instanceof HTMLButtonElement)
+    ) {
+      throw new Error("'Reset' or 'Refresh' is not a button element.");
+    }
+
+    if (!(statsFlagSwitchElmt instanceof HTMLInputElement)) {
+      throw new Error("flag-state is not an input element.");
+    }
+
     this.messageElmt = messageElement;
-    this.statsBarElmt = statsBarElmt;
-    this.statsElmt = statsElmt;
+    this.statsPanelElmt = statsPanelElmt;
+    this.statsProgressElmt = statsProgressElmt;
+    this.statsFlaggedElmt = statsFlaggedElmt;
     this.resetElmt = resetElement;
-    this.newBoardElmt = newBoardElmt;
-    this.flagSwitchElmt = flagSwitchElmt;
+    this.refreshBoardElmt = refreshBoardElmt;
+    this.statsFlagSwitchElmt = statsFlagSwitchElmt;
     this.btnSection = btnSection;
     this.minefieldElmt = minefieldElmt;
   }
@@ -51,12 +66,12 @@ export class MinesweeperView {
     this.resetElmt.addEventListener("click", controllerHandler);
   }
 
-  bindNewBoardBtn(controllerHandler: () => void): void {
-    this.newBoardElmt.addEventListener("click", controllerHandler);
+  bindRefreshBoardBtn(controllerHandler: () => void): void {
+    this.refreshBoardElmt.addEventListener("click", controllerHandler);
   }
 
   bindFlagSwitch(controllerHandler: () => void): void {
-    this.flagSwitchElmt.addEventListener("click", controllerHandler);
+    this.statsFlagSwitchElmt.addEventListener("click", controllerHandler);
   }
 
   bindDifficultyBtns(controllerHandler: (event: MouseEvent) => void): void {
@@ -66,6 +81,11 @@ export class MinesweeperView {
   bindMinefieldElmt(controllerHandler: (event: MouseEvent) => void): void {
     this.minefieldElmt.addEventListener("click", controllerHandler);
   }
+
+  // NEED to remove
+  getFlagSwitchState = () => {
+    console.dir(this.statsFlagSwitchElmt.checked);
+  };
 
   // ----------- Minefield Elements Builder
   createMinefield = (board: MineCell[][]): void => {
@@ -80,7 +100,6 @@ export class MinesweeperView {
         td.dataset.row = i.toString();
         td.dataset.col = j.toString();
         td.dataset.state = "not-revealed";
-        // td.dataset.marker = "flagged";
         tr.append(td);
       }
     }
@@ -131,6 +150,8 @@ export class MinesweeperView {
 
         if (board[i][j].isFlagged) {
           td.dataset.marker = "flagged";
+        } else {
+          td.dataset.marker = "";
         }
       }
     }
@@ -197,26 +218,45 @@ export class MinesweeperView {
   updateMessageElmt(msg: string): void {
     this.messageElmt.textContent = msg;
   }
-  updateStatsElmt(html: string): void {
-    this.statsElmt.innerHTML = html;
+  updateStatsPanel(statsProgressHTML: string, statsFlaggedHTML: string): void {
+    this.statsProgressElmt.innerHTML = statsProgressHTML;
+    this.statsFlaggedElmt.innerHTML = statsFlaggedHTML;
   }
 
   // ----------- Visibility
 
-  hideVisibilityStatsBarElmt = (): void => {
-    this.statsBarElmt.style.display = "none";
+  hideVisibilityStatsPanelElmt = (): void => {
+    this.statsPanelElmt.style.display = "none";
   };
 
-  showVisibilityStatsBarElmt = (): void => {
-    this.statsBarElmt.style.display = "flex";
+  showVisibilityStatsPanelElmt = (): void => {
+    this.statsPanelElmt.style.display = "flex";
+  };
+  hideVisibilityStatsFlagSwitchElmt = (): void => {
+    const labelEl = this.statsFlagSwitchElmt.labels?.[0]; // because only one label expected
+    if (labelEl) {
+      labelEl.style.display = "none";
+    }
+  };
+  showVisibilityStatsFlagSwitchElmt = (): void => {
+    const labelEl = this.statsFlagSwitchElmt.labels?.[0]; // because only one label expected
+    if (labelEl) {
+      labelEl.style.display = "block";
+    }
   };
 
-  hideVisibilityNewBoardBtnElmt = (): void => {
-    this.newBoardElmt.style.display = "none";
+  uncheckStatsFlagSwitchElmt = (): void => {
+    this.statsFlagSwitchElmt.checked = false;
   };
 
-  showVisibilityNewBoardBtnElmt = (): void => {
-    this.newBoardElmt.style.display = "flex";
+  hideVisibilityCtrlBtns = (): void => {
+    this.refreshBoardElmt.style.display = "none";
+    this.resetElmt.style.display = "none";
+  };
+
+  showVisibilityCtrlBtns = (): void => {
+    this.refreshBoardElmt.style.display = "flex";
+    this.resetElmt.style.display = "flex";
   };
 
   hideVisibilityBtnSection = (): void => {

@@ -5,6 +5,13 @@ export const difficulty = {
   hard: { rows: 20, cols: 20, bombs: 80 },
 };
 
+export const enum GameStatus {
+  PendingDifficulty = "pendingDifficulty",
+  Ongoing = "ongoing",
+  FinishedWin = "finishedWin",
+  FinishedLose = "finishedLose",
+}
+
 export const adjacentCells = [
   [-1, -1],
   [-1, 0],

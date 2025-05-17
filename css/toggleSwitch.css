@@ -1,7 +1,7 @@
 /* Taken from UIverse, Created by MuhammadHasann */
 /* https://uiverse.io/MuhammadHasann/popular-seahorse-73 */
 
-.toggle-cont {
+.toggle-switch {
   width: 5rem;
   height: 2.5rem;
   position: relative;
@@ -25,7 +25,7 @@
   transition: transform 0.5s ease;
 }
 
-.toggle-thumb {
+.toggle-actuator {
   width: 2rem;
   height: 2rem;
   background-color: darkslategray;
@@ -38,8 +38,8 @@
 }
 
 .toggle-icon::before {
-  content: "\f04b";
   font-family: "Font Awesome 6 Free";
+  content: "\f04b";
   font-weight: 900;
   font-size: 1rem;
   color: white;
@@ -49,7 +49,7 @@
   justify-content: center;
 }
 
-.toggle-input:checked + .toggle-label .toggle-thumb {
+.toggle-input:checked + .toggle-label .toggle-actuator {
   background-color: maroon;
   transform: translateX(2.5rem);
 }
