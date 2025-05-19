@@ -1,6 +1,9 @@
 // Notes:
 // need to find a way to tie the difficulty details into the front page
 
+// For effects usage (because i used CDN link)
+declare function confetti(options?: any): void;
+
 import { MineCell } from "./mSwprUtils";
 
 export class MinesweeperView {
@@ -13,6 +16,7 @@ export class MinesweeperView {
   private statsFlagSwitchElmt: HTMLInputElement;
   private btnSection: HTMLElement;
   private minefieldElmt: HTMLElement;
+  private explosionAudio = new Audio("/assets/explosionAudio.mp3"); // this would work if served correctly
 
   constructor() {
     const messageElement = document.getElementById("message");
@@ -265,5 +269,33 @@ export class MinesweeperView {
 
   showVisibilityBtnSection = (): void => {
     this.btnSection.style.display = "flex";
+  };
+
+  // ----------- Additional Effects
+
+  playExplosionSound = (): void => {
+    this.explosionAudio.volume = 1;
+    this.explosionAudio.currentTime = 0;
+    this.explosionAudio.play().catch((err) => {
+      console.warn("Audio play failed:", err);
+    });
+  };
+
+  showConfetti = (): void => {
+    confetti({
+      particleCount: 300,
+      angle: 220, //0 is right
+      spread: 200, // angle width of confetti spread
+      ticks: 300,
+      origin: { x: 1.2, y: -0.25 }, //x is left, y is top
+    });
+
+    confetti({
+      particleCount: 300,
+      angle: -40, //0 is right
+      spread: 200, // angle width of confetti spread
+      ticks: 300,
+      origin: { x: -0.2, y: -0.25 }, //x is left, y is top
+    });
   };
 }

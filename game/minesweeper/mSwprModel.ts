@@ -26,7 +26,6 @@ export class MinesweeperModel {
     this.cursorFlagMode = false;
   };
 
-  // NEED to look at if can replace difficultyLevel with currentDifficulty Level
   loadBoard = (difficultyLevel: string): void => {
     if (!difficulty[this.currentDifficultyLevel]) {
       console.log("Unknown Difficulty Selected");

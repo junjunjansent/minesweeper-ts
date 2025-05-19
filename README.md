@@ -1,6 +1,8 @@
 # Simple Minesweeper 💣 Game
 
-## Beginner User Story:
+## User Stories
+
+### Beginner User Story:
 
 - [x] User is able to select one of at least 3 buttons of difficulty to decide level of difficulty of the game they want to play
 - [x] User is able to obtain a game board "minefield", after selecting the difficulty, to commence gameplay
@@ -14,30 +16,40 @@
 - [x] When the user clicks on a cell with 0 adjacent bomb-containing cells, the board will automatically and iterateively reveal all adjacent cells to any 0 adjacent bomb-containing cells, so that the user would not need to reclick any cells and help the user further progress the game
 - [x] When the user clicks on a bomb-containing cell, the board will reveal all bomb-containing cells and inform the user that the game has ended and they have lost
 - [x] When the user clicks on a bomb-containing cell, the board will show where did the user made an error
-  - [ ] Audio when player clicks on a bomb-containing cell
+  - [FAIL on TS] Audio when player clicks on a bomb-containing cell
 - [x] When the user manages to reveal all non-bomb-containing cells, the board will reveal all cells and inform the user that the game has ended and they have won
-  - [ ] Add confetti when winning
+  - [x] Add confetti when winning
 - [x] User can re-initialise the game whenever they want -> via Reset Button
 - [x] User can regenerate another board of the current difficulty they are playing on whenever they want
 - [x] During gameplay, user has the option to utilise flag markers & no. of flags used
   - [x] Format the switch nicely with the stats
   - [x] Make sure switch resets properly after reset!
 
-## Additional User Stories:
+### Additional User Stories:
 
-- [ ] Refactor table into CSS grid
+~~- [ ] Refactor table into CSS grid~~
+
 - [ ] Minefield can be adjusted to be played on mobile
 - [ ] Show time taken to Win/Lose
 
-## Personal Additional User Stories:
+### Personal Additional User Stories:
 
 - [ ] Navbar as a foundation for portfolio building
 - [ ] Deploy if possible
 
-## Personal Learning Pointers:
+### Personal Learning Pointers:
 
 - [x] Check utility of Game Status
 - [ ] Refactor 'difficulty' into a class to allow for further difficulty levels to be added
 - [ ] See if can do testing
 - [ ] Explore the use of Sets in minesweeper logic
 - [ ] Explore if data can be stored on client localCache
+
+--
+
+## Credits
+
+Features adopted from:
+
+- ![Toggle Switch](https://uiverse.io/MuhammadHasann/popular-seahorse-73)
+- ![Confetti Animation](https://www.youtube.com/watch?v=hq_tKbSzAiY)

@@ -95,6 +95,7 @@ class MinesweeperController {
   // ---------- Input Handlers
 
   private handleReset = (): void => {
+    this.view.playExplosionSound();
     // update Elmts: minefield
     this.view.clearMinefield();
     this.view.hideVisibilityMinefieldElmt();
@@ -189,6 +190,7 @@ class MinesweeperController {
       // update Elmts: minefield - open and gray out minefield
       this.view.openMinefield(this.model.getBoard());
       this.view.greyMinefieldElmt();
+      this.view.showConfetti();
     } else {
       // affect Game Status
       this.model.setCurrentGameStatus(GameStatus.Ongoing);
