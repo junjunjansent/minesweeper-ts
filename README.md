@@ -73,5 +73,5 @@ I chose to implement a simple minesweeper game since I enjoyed playing it on the
 
 Features adopted from:
 
-- ![Toggle Switch](https://uiverse.io/MuhammadHasann/popular-seahorse-73)
-- ![Confetti Animation](https://www.youtube.com/watch?v=hq_tKbSzAiY)
+- [Toggle Switch](https://uiverse.io/MuhammadHasann/popular-seahorse-73)
+- [Confetti Animation](https://www.youtube.com/watch?v=hq_tKbSzAiY)
