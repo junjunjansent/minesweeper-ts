@@ -5,6 +5,7 @@
 declare function confetti(options?: any): void;
 
 import { MineCell } from "./mSwprUtils";
+import { TimerView } from "../../components/timerView";
 
 export class MinesweeperView {
   private messageElmt: HTMLElement;
@@ -18,6 +19,9 @@ export class MinesweeperView {
   private minefieldElmt: HTMLElement;
   private explosionAudio = new Audio("/assets/explosionAudio.mp3"); // this would work if served correctly
 
+  private timerElmt: HTMLElement;
+  private timerView: TimerView;
+
   constructor() {
     const messageElement = document.getElementById("message");
     const statsPanelElmt = document.getElementById("stats");
@@ -26,6 +30,7 @@ export class MinesweeperView {
     const resetElement = document.getElementById("reset");
     const refreshBoardElmt = document.getElementById("refresh");
     const statsFlagSwitchElmt = document.getElementById("flag-state");
+    const timerElmt = document.getElementById("timer");
     const btnSection = document.getElementById("btn-section");
     const minefieldElmt = document.getElementById("minefield");
 
@@ -38,7 +43,8 @@ export class MinesweeperView {
       !refreshBoardElmt ||
       !statsFlagSwitchElmt ||
       !btnSection ||
-      !minefieldElmt
+      !minefieldElmt ||
+      !timerElmt
     ) {
       throw new Error("Something is missing in DOM.");
     }
@@ -63,6 +69,8 @@ export class MinesweeperView {
     this.statsFlagSwitchElmt = statsFlagSwitchElmt;
     this.btnSection = btnSection;
     this.minefieldElmt = minefieldElmt;
+    this.timerElmt = timerElmt;
+    this.timerView = new TimerView(timerElmt);
   }
 
   // ----------- Binders
@@ -226,6 +234,20 @@ export class MinesweeperView {
     this.statsProgressElmt.innerHTML = statsProgressHTML;
     this.statsFlaggedElmt.innerHTML = statsFlaggedHTML;
   }
+
+  // ----------- Timer
+
+  updateTimerElmt = (seconds: number) => {
+    this.timerView.update(seconds);
+  };
+
+  resetTimerElmt = () => {
+    this.timerView.reset();
+  };
+
+  hideVisibilityTimerElmt = (): void => {
+    this.timerElmt.innerHTML = "";
+  };
 
   // ----------- Visibility
 

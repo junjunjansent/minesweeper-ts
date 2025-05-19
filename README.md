@@ -29,8 +29,8 @@
 
 ~~- [ ] Refactor table into CSS grid~~
 
-- [ ] Minefield can be adjusted to be played on mobile
-- [ ] Show time taken to Win/Lose
+- [x] Minefield can be adjusted to be played on mobile
+- [x] Show time taken to Win/Lose
 
 ### Personal Additional User Stories:
 

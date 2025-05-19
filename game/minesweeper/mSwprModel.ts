@@ -6,6 +6,7 @@ import {
   countFlaggedMineCells,
 } from "./mSwprUtils";
 import { difficulty, GameStatus } from "./mSwprConfig";
+import { TimerModel } from "../../utils/timerModel";
 
 export class MinesweeperModel {
   //   private mineCell: MineCell;
@@ -14,6 +15,11 @@ export class MinesweeperModel {
   private currentDifficultyLevel: string;
   private cursorFlagMode: Boolean;
   private board: MineCell[][];
+  private timer: TimerModel;
+
+  constructor() {
+    this.timer = new TimerModel();
+  }
 
   // ---------- Loaders
 
@@ -68,6 +74,21 @@ export class MinesweeperModel {
     const { bombs } = this.difficulty[this.currentDifficultyLevel];
     return bombs === countNotRevealedMineCells(this.board);
   };
+
+  // ---------- Timer
+
+  startTimer(mSwprViewTimerHandler: (sessionSeconds: number) => void) {
+    this.timer.start(mSwprViewTimerHandler);
+  }
+
+  stopTimer() {
+    this.timer.stop();
+  }
+
+  resetTimer() {
+    this.timer.reset();
+  }
+
   // ---------- Getters
 
   getDifficulty = (): unknown => {

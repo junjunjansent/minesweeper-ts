@@ -24,8 +24,8 @@ class MinesweeperController {
   private init = () => {
     this.model.loadDifficulty();
     this.model.setCurrentGameStatus(GameStatus.PendingDifficulty);
-    this.view.updateMessageElmt("Click to Begin :)");
-    // this.view.hideVisibilityStatsBarElmt();
+    // update Elmts: command
+    this.configCommand();
   };
 
   private initMinefield = (level?: string) => {
@@ -55,11 +55,13 @@ class MinesweeperController {
         this.view.hideVisibilityCtrlBtns();
         this.view.hideVisibilityStatsPanelElmt();
         this.view.hideVisibilityStatsFlagSwitchElmt();
+        this.model.resetTimer();
+        this.view.hideVisibilityTimerElmt();
         break;
-      case GameStatus.Ongoing:
+      case GameStatus.InitialisePlay: {
         const bombQty = this.model.getCurrentBombQty();
-        const NotRevealedMineCells = this.model.getNotRevealedMineCells();
-        const statsProgress = NotRevealedMineCells - bombQty;
+        const notRevealedMineCells = this.model.getNotRevealedMineCells();
+        const statsProgress = notRevealedMineCells - bombQty;
         const statsFlagged = this.model.getFlaggedMineCells();
 
         // message texts
@@ -72,16 +74,36 @@ class MinesweeperController {
         this.view.showVisibilityStatsPanelElmt();
         this.view.showVisibilityStatsFlagSwitchElmt();
         this.view.updateStatsPanel(statsProgressHTML, statsFlaggedHTML);
+        this.view.resetTimerElmt();
+        this.model.startTimer(this.view.updateTimerElmt);
         break;
+      }
+      case GameStatus.Ongoing: {
+        const bombQty = this.model.getCurrentBombQty();
+        const notRevealedMineCells = this.model.getNotRevealedMineCells();
+        const statsProgress = notRevealedMineCells - bombQty;
+        const statsFlagged = this.model.getFlaggedMineCells();
+
+        // message texts
+        const bombQtyMsg = `${bombQty} 💣s hidden... Good luck!`;
+        const statsProgressHTML = `${statsProgress} <span class="fa-regular fa-square"></span> more to go!`;
+        const statsFlaggedHTML = `${statsFlagged} <span class="fa-regular fa-flag"></span> used`;
+
+        this.view.updateMessageElmt(bombQtyMsg);
+        this.view.updateStatsPanel(statsProgressHTML, statsFlaggedHTML);
+        break;
+      }
       case GameStatus.FinishedWin:
         this.view.updateMessageElmt(`🤩!!You WON!!🤩 `);
         this.view.updateStatsPanel(`Wanna play again?`, "");
         this.view.hideVisibilityStatsFlagSwitchElmt();
+        this.model.stopTimer();
         break;
       case GameStatus.FinishedLose:
         this.view.updateMessageElmt(`You Lost! 😔`);
         this.view.updateStatsPanel(`Wanna play again?`, "");
         this.view.hideVisibilityStatsFlagSwitchElmt();
+        this.model.stopTimer();
         break;
       default:
         break;
@@ -95,7 +117,6 @@ class MinesweeperController {
   // ---------- Input Handlers
 
   private handleReset = (): void => {
-    this.view.playExplosionSound();
     // update Elmts: minefield
     this.view.clearMinefield();
     this.view.hideVisibilityMinefieldElmt();
@@ -117,7 +138,7 @@ class MinesweeperController {
     this.model.loadFalseCursorFlagMode();
 
     // affect Game Status
-    this.model.setCurrentGameStatus(GameStatus.Ongoing);
+    this.model.setCurrentGameStatus(GameStatus.InitialisePlay);
 
     // update Elmts: command
     this.configCommand();
@@ -147,7 +168,7 @@ class MinesweeperController {
     this.model.loadFalseCursorFlagMode();
 
     // affect Game Status
-    this.model.setCurrentGameStatus(GameStatus.Ongoing);
+    this.model.setCurrentGameStatus(GameStatus.InitialisePlay);
 
     // affect cursor mode
     this.configCommand();
@@ -162,6 +183,9 @@ class MinesweeperController {
     ) {
       return;
     }
+
+    // affect Game Status
+    this.model.setCurrentGameStatus(GameStatus.Ongoing);
 
     // define variable
     const row = parseInt(event.target.dataset.row ?? "-1");
@@ -192,8 +216,6 @@ class MinesweeperController {
       this.view.greyMinefieldElmt();
       this.view.showConfetti();
     } else {
-      // affect Game Status
-      this.model.setCurrentGameStatus(GameStatus.Ongoing);
     }
 
     this.configCommand();

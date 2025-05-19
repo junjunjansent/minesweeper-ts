@@ -16,6 +16,12 @@
   width: 100%;
   height: 100%;
   background-color: steelblue;
+  background-image: linear-gradient(
+    -12deg,
+    #0000003d 2%,
+    transparent 90%,
+    #ffffff 100%
+  );
   border-radius: 9999px;
   cursor: pointer;
   box-shadow: inset 0px 0px 8px black;
