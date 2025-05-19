@@ -1,5 +1,28 @@
 # Simple Minesweeper 💣 Game
 
+## Overall
+
+### Background
+
+I chose to implement a simple minesweeper game since I enjoyed playing it on the computer decades ago. Decided to go for something that I could then slowly add other additional features.
+
+- There is also the desire to use this a a foundation to build a portfolio of mini games and utils for myself.
+
+### Language utilised
+
+- HTML
+- CSS (flex)
+
+### Pages of the Game
+
+#### Minesweeper Landing Page
+
+![Landing Page of Minesweeper](./assets/mswpr_landing_page.png)
+
+#### Minesweeper Game PAge
+
+![Game Page of Minesweeper](./assets/mswpr_game_initialised.png)
+
 ## User Stories
 
 ### Beginner User Story:
@@ -27,8 +50,7 @@
 
 ### Additional User Stories:
 
-~~- [ ] Refactor table into CSS grid~~
-
+- ~~[ ] Refactor table into CSS grid~~
 - [x] Minefield can be adjusted to be played on mobile
 - [x] Show time taken to Win/Lose
 
@@ -42,8 +64,8 @@
 - [x] Check utility of Game Status
 - [ ] Refactor 'difficulty' into a class to allow for further difficulty levels to be added
 - [ ] See if can do testing
-- [ ] Explore the use of Sets in minesweeper logic
 - [ ] Explore if data can be stored on client localCache
+- ~~[ ] Explore the use of Sets in minesweeper logic~~
 
 --
 
