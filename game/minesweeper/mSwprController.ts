@@ -2,7 +2,7 @@ import { MinesweeperModel } from "./mSwprModel";
 import { MinesweeperView } from "./mSwprView";
 import { GameStatus } from "./mSwprConfig";
 
-class MinesweeperController {
+export class MinesweeperController {
   private model: MinesweeperModel;
   private view: MinesweeperView;
 
@@ -221,8 +221,3 @@ class MinesweeperController {
     this.configCommand();
   };
 }
-
-/*----------------------------- Initialise App -----------------------------*/
-const msModel = new MinesweeperModel();
-const msView = new MinesweeperView();
-const msController = new MinesweeperController(msModel, msView);
