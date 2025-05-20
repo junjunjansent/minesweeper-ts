@@ -45,7 +45,7 @@ jobs:
       - name: Copy static files
         run: |
           cp ./index.html build/
-          cp ./style.css build/
+          cp ./css/style.css build/
 
       # Upload only the final build directory
       - name: Upload artifact
