@@ -19,7 +19,9 @@ export class MinesweeperView {
   private statsFlagSwitchElmt: HTMLInputElement;
   private btnSection: HTMLElement;
   private minefieldElmt: HTMLElement;
-  private explosionAudio = new Audio("/assets/explosionAudio.mp3"); // this would work if served correctly
+  private explosionAudio = new Audio("assets/explosionAudio.mp3"); // this would work if served correctly
+  // "/assets/explosionAudio.mp3") -> is absolute path
+  // "assets/explosionAudio.mp3") -> is relative path
 
   private timerElmt: HTMLElement;
   private timerView: TimerView;
