@@ -1,5 +1,12 @@
 # Simple Minesweeper 💣 Game
 
+## Table of Content
+
+- [Overall](#overall)
+- [Pages of the Day](#pages-of-the-game)
+- [User Stories](#user-stories)
+- [Credits](#credits)
+
 ## Overall
 
 ### Background
@@ -12,14 +19,19 @@ I chose to implement a simple minesweeper game since I enjoyed playing it on the
 
 - HTML
 - CSS (flex)
+- Typescript
 
-### Pages of the Game
+### Design pattern used
 
-#### Minesweeper Landing Page
+- MVC with OOP (with FPs in utils)
+
+## Pages of the Game
+
+### Minesweeper Landing Page
 
 ![Landing Page of Minesweeper](./assets/mswpr_landing_page.png)
 
-#### Minesweeper Game PAge
+### Minesweeper Game PAge
 
 ![Game Page of Minesweeper](./assets/mswpr_game_initialised.png)
 
