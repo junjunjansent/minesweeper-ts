@@ -19,7 +19,7 @@ export class MinesweeperView {
   private statsFlagSwitchElmt: HTMLInputElement;
   private btnSection: HTMLElement;
   private minefieldElmt: HTMLElement;
-  private explosionAudio = new Audio("../../assets/explosionAudio.mp3"); // this would work if served correctly
+  private explosionAudio = new Audio("/assets/explosionAudio.mp3"); // this would work if served correctly
 
   private timerElmt: HTMLElement;
   private timerView: TimerView;
