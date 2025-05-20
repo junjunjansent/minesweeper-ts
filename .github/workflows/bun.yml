@@ -39,13 +39,13 @@ jobs:
       - name: Build with Bun
         run: |
           mkdir -p build
-          bun build src/app.ts --outdir build --target browser --minify
+          bun build ./app.ts --outdir build --target browser --minify
 
       # Copy public files (HTML/CSS)
       - name: Copy static files
         run: |
-          cp public/index.html build/
-          cp public/style.css build/
+          cp ./index.html build/
+          cp ./style.css build/
 
       # Upload only the final build directory
       - name: Upload artifact
