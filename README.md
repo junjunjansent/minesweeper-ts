@@ -1,6 +1,6 @@
 # Simple Minesweeper 💣 Game
 
-## Table of Content
+## Table of Contents
 
 - [Overall](#overall)
 - [Pages of the Day](#pages-of-the-game)
