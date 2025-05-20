@@ -72,7 +72,7 @@ But hover and cursor changes should be sufficient for the player to learn how to
 ### Personal Additional User Stories:
 
 - [ ] Navbar as a foundation for portfolio building
-- [ ] Deploy if possible
+- [x] Deploy if possible
 
 ### Personal Learning Pointers:
 

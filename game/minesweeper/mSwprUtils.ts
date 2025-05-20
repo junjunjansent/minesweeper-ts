@@ -1,4 +1,13 @@
-import { adjacentCells } from "./mSwprConfig";
+const adjacentCells = [
+  [-1, -1],
+  [-1, 0],
+  [-1, 1],
+  [0, -1],
+  [0, 1],
+  [1, -1],
+  [1, 0],
+  [1, 1],
+];
 
 // ----------------- General Classes
 export class MineCell {

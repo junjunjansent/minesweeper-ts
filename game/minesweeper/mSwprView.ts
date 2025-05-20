@@ -98,11 +98,6 @@ export class MinesweeperView {
     this.minefieldElmt.addEventListener("click", controllerHandler);
   }
 
-  // NEED to remove
-  getFlagSwitchState = () => {
-    console.dir(this.statsFlagSwitchElmt.checked);
-  };
-
   // ----------- Minefield Elements Builder
   createMinefield = (board: MineCell[][]): void => {
     const rows = board.length;

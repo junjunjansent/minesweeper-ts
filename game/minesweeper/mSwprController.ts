@@ -1,6 +1,6 @@
 import { MinesweeperModel } from "./mSwprModel";
 import { MinesweeperView } from "./mSwprView";
-import { GameStatus } from "./mSwprConfig";
+import { GameStatus } from "../gameConstants";
 
 export class MinesweeperController {
   private model: MinesweeperModel;
@@ -103,6 +103,7 @@ export class MinesweeperController {
         this.view.updateMessageElmt(`You Lost! 😔`);
         this.view.updateStatsPanel(`Wanna play again?`, "");
         this.view.hideVisibilityStatsFlagSwitchElmt();
+        this.view.playExplosionSound();
         this.model.stopTimer();
         break;
       default:

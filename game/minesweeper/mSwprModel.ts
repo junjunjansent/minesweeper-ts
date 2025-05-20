@@ -5,7 +5,8 @@ import {
   countNotRevealedMineCells,
   countFlaggedMineCells,
 } from "./mSwprUtils";
-import { difficulty, GameStatus } from "./mSwprConfig";
+import { difficulty } from "./mSwprConfig";
+import { GameStatus } from "../gameConstants";
 import { TimerModel } from "../../utils/timerModel";
 
 export class MinesweeperModel {

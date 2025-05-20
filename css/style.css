@@ -188,19 +188,31 @@ h5 {
 }
 
 #minefield td[data-state="revealed"] {
-  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.3);
   background-color: lightskyblue;
+  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 #minefield td[data-state="end-error"] {
+  background-color: coral;
   box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
-  background-color: lightcoral;
+  /* 2px 2px 10px rgba(240, 128, 128, 1); */
+  transition: all 0.5s ease;
+}
+
+#minefield td[data-state="end-error"]:hover {
+  background-color: crimson;
+  box-shadow: 0px 0px 10px rgba(220, 20, 60, 1),
+    0px 0px 20px rgba(220, 20, 60, 1), 2px 2px 40px rgba(220, 20, 60, 1),
+    0px 0px 60px rgba(220, 20, 60, 1), 2px 2px 80px rgba(220, 20, 60, 1),
+    0px 0px 100px rgba(220, 20, 60, 1), 2px 2px 150px rgba(220, 20, 60, 1),
+    0px 0px 200px rgba(220, 20, 60, 1), 2px 2px 400px rgba(220, 20, 60, 1),
+    0px 0px 600px rgba(220, 20, 60, 1), 2px 2px 800px rgba(220, 20, 60, 1);
 }
 
 #minefield td[data-state="not-revealed"]:hover {
-  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
-  background-color: gray;
   cursor: pointer;
+  background-color: gray;
+  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.6);
 }
 
 @media (max-width: 480px) {
