@@ -27,31 +27,31 @@ jobs:
         with:
           bun-version: latest
 
-      # - name: Build TS using bun
-      #   run: bun build ./app.ts --outdir ./build
+      - name: Build TS using bun
+        run: bun build ./app.ts --outdir ./build
 
-      # - name: Upload artifact
-      #   uses: actions/upload-pages-artifact@v3
-      #   with:
-      #     path: .
-
-      # Build the TS files to JS using Bun
-      - name: Build with Bun
-        run: |
-          mkdir -p build
-          bun build ./app.ts --outdir build --target browser --minify
-
-      # Copy public files (HTML/CSS)
-      - name: Copy static files
-        run: |
-          cp ./index.html build/
-          cp ./css/style.css build/
-
-      # Upload only the final build directory
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: build
+          path: .
+
+      # # Build the TS files to JS using Bun
+      # - name: Build with Bun
+      #   run: |
+      #     mkdir -p build
+      #     bun build ./app.ts --outdir build --target browser --minify
+
+      # # Copy public files (HTML/CSS)
+      # - name: Copy static files
+      #   run: |
+      #     cp ./index.html build/
+      #     cp ./css/style.css build/
+
+      # # Upload only the final build directory
+      # - name: Upload artifact
+      #   uses: actions/upload-pages-artifact@v3
+      #   with:
+      #     path: build
 
   # Deploy job
   deploy:
