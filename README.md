@@ -79,7 +79,7 @@ But hover and cursor changes should be sufficient for the player to learn how to
 - [x] Check utility of Game Status
 - [ ] Refactor 'difficulty' into a class to allow for further difficulty levels to be added
 - [ ] See if can do testing
-- [ ] Explore if data can be stored on client localCache
+- [ ] Explore if data can be stored on client localStorage
 - ~~[ ] Explore the use of Sets in minesweeper logic~~
 
 --
