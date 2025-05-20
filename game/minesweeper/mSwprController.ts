@@ -146,9 +146,6 @@ export class MinesweeperController {
 
   private handleFlagState = (): void => {
     this.model.toggleCursorFlagMode();
-
-    //NEED TO REMOVE
-    this.view.getFlagSwitchState();
   };
 
   private handleDifficultyBtns = (event: MouseEvent): void => {

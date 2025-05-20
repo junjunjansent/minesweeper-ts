@@ -3,6 +3,7 @@ export class TimerModel {
   private timerSession: number | null = null;
 
   start = (viewTimerHandler: (sessionSeconds: number) => void): void => {
+    this.stop();
     this.timerStart = Date.now();
 
     this.timerSession = window.setInterval(() => {

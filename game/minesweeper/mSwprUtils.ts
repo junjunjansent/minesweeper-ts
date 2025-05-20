@@ -33,6 +33,9 @@ export const createMinesweeperBoard = ({ rows, cols, bombs }): MineCell[][] => {
 
   // Fill bombs on board
   let bombsPlaced = 0;
+  if (bombs > rows * cols) {
+    throw new Error("Too many bombs for grid");
+  }
   while (bombsPlaced < bombs) {
     let row_bomb = Math.floor(Math.random() * rows); // cause it is from 0 to rows-1
     let col_bomb = Math.floor(Math.random() * cols);
