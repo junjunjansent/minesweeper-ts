@@ -27,6 +27,9 @@ I chose to implement a simple minesweeper game since I enjoyed playing it on the
 
 ## Pages of the Game
 
+The game does assume that the user knows how to play minesweeper. Perhaps in the future, maybe a simple description would be included for the button section.
+But hover and cursor changes should be sufficient for the player to learn how to play.
+
 ### Minesweeper Landing Page
 
 ![Landing Page of Minesweeper](./assets/mswpr_landing_page.png)
@@ -41,7 +44,7 @@ I chose to implement a simple minesweeper game since I enjoyed playing it on the
 
 - [x] User is able to select one of at least 3 buttons of difficulty to decide level of difficulty of the game they want to play
 - [x] User is able to obtain a game board "minefield", after selecting the difficulty, to commence gameplay
-  - Easy(9x9, 10 bombs (12%)) | Medium(15x15, 40 bombs (17%)) | High (30x30, 180 bombs (20%))
+  - Minimally some Easy, Medium, and Difficult
 - [x] During gameplay, User can click on the cells on the minefield board to make a move.
 - [x] During gameplay, User will be able to know how many bombs there are to be found to understand the progress of the game
 - [x] During gameplay, User will be able to know how many remaining cells they need to click to successfully win the game
